@@ -4,7 +4,15 @@
   border:solid #fff ;
   border-width: 1px 0px 0px 0px;
 
+
+
   cursor: pointer;
+}
+
+a {
+  color: #fff !important;
+  font-style: normal !important;
+  text-decoration-line: none !important;
 }
 
 .side-bar-item:last-child {
@@ -16,10 +24,11 @@
 }
 
 .wrapper-side-bar {
+  color: #fff !important;
   background-color: #6b8e23;
   width: 200px;
   height: 100vh;
-  color: #fff;
+  
 }
 
 .logo-wrapper {
