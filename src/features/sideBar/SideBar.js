@@ -2,18 +2,24 @@ import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import styles from "./SideBar.module.css";
 
-const SideBarItem = ({ info, isClicked, onClick }) => {
-  return (
-    <div
-      className={classNames(styles["side-bar-item"], {
-        [styles.clicked]: isClicked === info.name,
-      })}
-      onClick={() => onClick(info.name)}
-    >
-      {info.name}
-    </div>
-  );
-};
+class SideBarItem extends React.Component {
+  constructor({ info, isClicked, onClick }) {
+    super({ info, isClicked, onClick });
+  }
+
+  render() {
+    return (
+      <div
+        className={classNames(styles["side-bar-item"], {
+          [styles.clicked]: this.isClicked === this.info.name,
+        })}
+        onClick={() => this.onClick(this.info.name)}
+      >
+        {this.info.name}
+      </div>
+    );
+  }
+}
 
 class ItemSideBarList extends React.Component {
   constructor({ itemLists, isClicked, onClick }) {
