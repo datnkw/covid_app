@@ -1,18 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import store from './app/store';
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import store from "./app/store";
+import SideBar from "./features/sideBar/SideBar";
+import { Provider } from "react-redux";
+import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
-    </Provider>
+      <SideBar
+        itemSideBarInfoList={[
+          {
+            name: "Vietnam",
+            to: "/vietnam",
+          },
+          {
+            name: "Wolrd",
+            to: "/world",
+          },
+          {
+            name: "Profile",
+            to: "/profile",
+          },
+        ]}
+      />{" "}
+    </Provider>{" "}
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
