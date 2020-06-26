@@ -1,39 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
 import classNames from "classnames";
 import styles from "./SideBar.module.css";
 
 class SideBarItem extends React.Component {
-  constructor({ info, isClicked, onClick }) {
-    super({ info, isClicked, onClick });
+  constructor(props) {
+    super(props);
   }
 
   render() {
+    const {info, isClicked, onClick} = this.props;
     return (
-      <div
-        className={classNames(styles["side-bar-item"], {
-          [styles.clicked]: this.isClicked === this.info.name,
-        })}
-        onClick={() => this.onClick(this.info.name)}
-      >
-        {this.info.name}
-      </div>
+      <Link to={info.to}>
+        <div
+          className={classNames(styles["side-bar-item"], {
+            [styles.clicked]: isClicked === info.name,
+          })}
+          onClick={() => onClick(info.name)}
+        >
+          {info.name}
+        </div>
+      </Link>
     );
   }
 }
 
 class ItemSideBarList extends React.Component {
-  constructor({ itemLists, isClicked, onClick }) {
-    super({ itemLists, isClicked, onClick });
+  constructor(props) {
+    super(props);
   }
 
   render() {
-    return this.itemLists
-      ? this.itemLists.map((item) => (
+    const {itemLists, isClicked, onClick} = this.props
+    return itemLists
+      ? itemLists.map((item) => (
           <SideBarItem
             key={item.name ? item.name : ""}
             info={item}
-            isClicked={this.isClicked}
-            onClick={this.onClick}
+            isClicked={isClicked}
+            onClick={onClick}
           />
         ))
       : null;
@@ -41,10 +52,8 @@ class ItemSideBarList extends React.Component {
 }
 
 class SideBar extends React.Component {
-  constructor({ itemSideBarInfoList }) {
-    super({
-      itemSideBarInfoList,
-    });
+  constructor(props) {
+    super(props);
     this.clickItem = this.clickItem.bind(this);
     this.state = {
       isClicked: "Vietnam",
@@ -52,20 +61,25 @@ class SideBar extends React.Component {
   }
 
   clickItem(name) {
-    this.setIsClicked(name);
+    this.setState({
+      isClicked: name
+    });
     console.log("name click: ", name);
+    console.log("this isClick: ", this.state.isClicked);
   }
 
   render() {
+    const {itemSideBarInfoList} = this.props
     return (
       <div className={styles["wrapper-side-bar"]}>
         <div className={styles["logo-wrapper"]}>
           <div className={styles["logo"]}></div>
           <p>Covid-19 app</p>
         </div>
+
         <ItemSideBarList
-          itemLists={this.itemSideBarInfoList}
-          isClicked={this.isClicked}
+          itemLists={itemSideBarInfoList}
+          isClicked={this.state.isClicked}
           onClick={this.clickItem}
         />
       </div>
