@@ -3,29 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import store from "./app/store";
-import SideBar from "./features/sideBar/SideBar";
+
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <SideBar
-        itemSideBarInfoList={[
-          {
-            name: "Vietnam",
-            to: "/vietnam",
-          },
-          {
-            name: "Wolrd",
-            to: "/world",
-          },
-          {
-            name: "Profile",
-            to: "/profile",
-          },
-        ]}
-      />{" "}
+      <App />{" "}
     </Provider>{" "}
   </React.StrictMode>,
   document.getElementById("root")
