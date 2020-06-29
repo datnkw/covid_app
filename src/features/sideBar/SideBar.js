@@ -64,8 +64,6 @@ class SideBar extends React.Component {
     this.setState({
       isClicked: name
     });
-    console.log("name click: ", name);
-    console.log("this isClick: ", this.state.isClicked);
   }
 
   render() {

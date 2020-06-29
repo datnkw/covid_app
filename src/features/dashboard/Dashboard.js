@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Loading from "../loading/Loading";
+import InfoByCard from "../InfoByCase/InfoByCase"
 import config from "../../config.json";
 import {
   BrowserRouter as Router,
@@ -28,12 +29,14 @@ class CountryItem extends React.Component {
 
   render() {
     const { Country, TotalConfirmed } = this.props.info;
-
+    const itemUrl = '/country/' + Country;
     return (
+      <Link to={itemUrl}>
       <div className={styles.countryItem}>
         <p>{Country}</p>
         <p>{TotalConfirmed}</p>
       </div>
+      </Link>
     );
   }
 }
@@ -42,7 +45,7 @@ class CountryItemList extends React.Component {
   render() {
     const { countryItemList } = this.props;
     return countryItemList
-      ? countryItemList.map((item) => <CountryItem info={item} />)
+      ? countryItemList.map((item) => <CountryItem key={item.Slug} info={item} />)
       : null;
   }
 }
@@ -69,7 +72,6 @@ class Dashboard extends React.Component {
 
   async componentDidMount() {
     await this.getInfo();
-    //console.log("this global in function: ", this.summaryGlobalInfo)
   }
 
   render() {
@@ -79,29 +81,7 @@ class Dashboard extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <div className={styles.globalInfoContainer}>
-          <p>
-            New confirmed: <span>{this.summaryGlobalInfo.NewConfirmed}</span>
-          </p>
-          <p>
-            Total confirmed:{" "}
-            <span>{this.summaryGlobalInfo.TotalConfirmed}</span>
-          </p>
-          <p>
-            New deaths: <span>{this.summaryGlobalInfo.NewDeaths}</span>
-          </p>
-          <p>
-            Total deaths: <span>{this.summaryGlobalInfo.TotalDeaths}</span>
-          </p>
-          <p>
-            New recovered: <span>{this.summaryGlobalInfo.NewRecovered}</span>
-          </p>
-          <p>
-            Total recovered:{" "}
-            <span>{this.summaryGlobalInfo.TotalRecovered}</span>
-          </p>
-        </div>
-
+        <InfoByCard cases={this.summaryGlobalInfo}/>
         <div className={styles.countryItemWrapper}>
           <CountryItemList countryItemList={this.summaryCountries} />
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import SideBar from "./features/sideBar/SideBar";
 import Dashboard from "./features/dashboard/Dashboard";
+import CountryInfo from "./features/countryItem/CountryInfo";
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -36,6 +37,8 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/country/:name" component={CountryInfo}>
           </Route>
           <Route path="/world">
             <Dashboard />
