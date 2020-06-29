@@ -1,0 +1,30 @@
+.card {
+  display: flex;
+  color: #fff;
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  font-size: 30px;
+}
+
+.card p {
+  font-weight: bold;
+}
+
+.info {
+  padding: 20px;
+}
+
+.card p span {
+  font-weight: normal;
+}
+
+.card .new {
+  background-color: #4bbc0e
+}
+
+.card .total {
+  background-color: #9fc14e
+}
