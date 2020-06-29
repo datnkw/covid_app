@@ -1,7 +1,16 @@
+@import "reset.css";
+
 .App {
   /* text-align: center; */
   display: flex;
+  width: 100%;
+}
 
+.content {
+  background-color: red;
+  flex-grow: 1;
+
+  padding: 10px;
 }
 
 /* div {

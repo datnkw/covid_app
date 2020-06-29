@@ -1,5 +1,6 @@
 import React from 'react';
 import SideBar from "./features/sideBar/SideBar";
+import Dashboard from "./features/dashboard/Dashboard";
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -31,18 +32,19 @@ function App() {
             },
           ]}
         />
-
+        <div className="content">
         <Switch>
           <Route exact path="/">
             <Home />
           </Route>
           <Route path="/world">
-            <About />
-          </Route>
-          <Route path="/profile">
             <Dashboard />
           </Route>
+          <Route path="/profile">
+            <About />
+          </Route>
         </Switch>
+        </div>
       </div>
     </Router>
     </div>
@@ -65,12 +67,12 @@ function About() {
   );
 }
 
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  );
-}
+// function Dashboard() {
+//   return (
+//     <div>
+//       <h2>Dashboard</h2>
+//     </div>
+//   );
+// }
 
 export default App;

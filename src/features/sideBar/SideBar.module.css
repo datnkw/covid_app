@@ -3,9 +3,6 @@
   background-color: #6b8e23;
   border:solid #fff ;
   border-width: 1px 0px 0px 0px;
-
-
-
   cursor: pointer;
 }
 
@@ -15,7 +12,7 @@ a {
   text-decoration-line: none !important;
 }
 
-.side-bar-item:last-child {
+.side-bar-item.last-child {
   border-width: 1px 0px;
 }
 
