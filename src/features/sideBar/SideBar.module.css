@@ -23,9 +23,10 @@ a {
 .wrapper-side-bar {
   color: #fff !important;
   background-color: #6b8e23;
-  width: 200px;
+  min-width: 200px;
   height: 100vh;
   
+  position: fixed;
 }
 
 .logo-wrapper {

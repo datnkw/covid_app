@@ -5,11 +5,10 @@ class Loading extends React.Component {
   render() {
     return (
       <div className={styles.loadingWrapper}>
-    <div className={styles.loading}></div>
-    {/* <div className={styles.loadingTwo}></div> */}
-    </div>
-  )
-}
+        <div className={styles.loading}> </div>{" "}
+      </div>
+    );
+  }
 }
 
 export default Loading;
