@@ -48,7 +48,7 @@ class ByDateItem extends React.Component {
 
   render() {
     const transfomData = this.getData(this.props.item, this.props.preItem);
-    console.log("result get data: ", transfomData);
+    //console.log("result get data: ", transfomData);
     return (
       <div>
         <InfoByCase cases={transfomData}/>
@@ -58,6 +58,11 @@ class ByDateItem extends React.Component {
 }
 
 class ByDateItemList extends React.Component {
+  convertNormalFormatDate(dateString){
+    const date = new Date(dateString);
+    return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+  }
+
   render() {
     const { byDateItemList } = this.props;
     //console.log("byDateItemList: ", byDateItemList);
@@ -65,11 +70,15 @@ class ByDateItemList extends React.Component {
     let result = [];
 
     for(let i = byDateItemList.length - 1; i >= 0; i--) {
-        result.push(<ByDateItem 
-                      key={byDateItemList[i].Date} 
+        result.push(
+        <div key={i}>
+          <p>{this.convertNormalFormatDate(byDateItemList[i].Date)}</p>
+        <ByDateItem 
+                       
                       item={byDateItemList[i]}
                       preItem= {!i ? null : byDateItemList[i - 1]}
-                      />)
+                      />
+                      </div>)
     }
 
     return (
@@ -85,7 +94,8 @@ class CountryInfo extends React.Component {
   constructor(props) {
     super(props);
 
-    this.countryName = this.props.match.params.name;
+    // const paramsName = this.props.match.params.name;
+    this.countryName = (this.props.match ? this.props.match.params.name : props.name);
     console.log("countryName: ", this.countryName);
 
     this.state = {
