@@ -3,13 +3,6 @@ import axios from "axios";
 import Loading from "../loading/Loading";
 import config from "../../config.json";
 import InfoByCase from "../InfoByCase/InfoByCase"
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-} from "react-router-dom";
 import styles from "./CountryInfo.module.css";
 
 class ByDateItem extends React.Component {
@@ -104,11 +97,18 @@ class CountryInfo extends React.Component {
   }
 
   async getInfo() {
+    console.log('load data country info begin');
     const url = config.api + "/dayone/country/" + this.countryName;
     await axios.get(url).then((response) => {
       this.data = response.data;
 
+      console.log('load data country info done');
+
       this.setState({ loading: false });
+
+      if(this.props.setIsLoadingDataDoneState){
+        this.props.setIsLoadingDataDoneState();
+      }
     });
   }
 
@@ -123,7 +123,7 @@ class CountryInfo extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <div className={styles.header}>Thông tin của {this.countryName}</div>
+        <div className={styles.header}>Information of {this.countryName}</div>
         <ByDateItemList byDateItemList={this.data} />
       </div>
     )
