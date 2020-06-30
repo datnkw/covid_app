@@ -1,18 +1,11 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
+  Link
 } from "react-router-dom";
 import classNames from "classnames";
 import styles from "./SideBar.module.css";
 
 class SideBarItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const {info, isClicked, onClick} = this.props;
@@ -32,9 +25,6 @@ class SideBarItem extends React.Component {
 }
 
 class ItemSideBarList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const {itemLists, isClicked, onClick} = this.props
