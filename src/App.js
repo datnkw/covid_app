@@ -4,6 +4,7 @@ import Dashboard from "./features/dashboard/Dashboard";
 import CountryInfo from "./features/countryItem/CountryInfo";
 import Profile from "./features/profile/Profile";
 import SplashScreen from "./features/splashScreen/SplashScreen";
+import HandleOffline from "./features/handleOffline/HandleOffline";
 import "./App.css";
 import {
   BrowserRouter as Router,
@@ -59,6 +60,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
+        
         <Router>
           <div className="App">
             <SideBar
@@ -78,6 +80,7 @@ class App extends React.Component {
               ]}
             />
             <div className="content">
+            <HandleOffline />
               <Switch>
                 <Route exact path="/">
                   <CountryInfo name="Vietnam"/>
