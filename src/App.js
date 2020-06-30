@@ -8,9 +8,7 @@ import "./App.css";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  useParams,
+  Route
 } from "react-router-dom";
 
 class App extends React.Component {
@@ -82,14 +80,14 @@ class App extends React.Component {
             <div className="content">
               <Switch>
                 <Route exact path="/">
-                  <CountryInfo name="Vietnam" />
+                  <CountryInfo name="Vietnam"/>
                 </Route>
                 <Route path="/country/:name" component={CountryInfo}></Route>
                 <Route path="/world">
-                  <Dashboard />
+                  <Dashboard setIsLoadingDataDoneState={this.setIsLoadingDataDoneState}/>
                 </Route>
                 <Route path="/profile">
-                  <Profile />
+                  <Profile setIsLoadingDataDoneState={this.setIsLoadingDataDoneState}/>
                 </Route>
               </Switch>
             </div>

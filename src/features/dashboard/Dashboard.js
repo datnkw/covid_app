@@ -4,14 +4,9 @@ import Loading from "../loading/Loading";
 import InfoByCard from "../InfoByCase/InfoByCase"
 import config from "../../config.json";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
+  Link
 } from "react-router-dom";
 import styles from "./Dashboard.module.css";
-import { render } from "@testing-library/react";
 
 class CountryItem extends React.Component {
   // {
@@ -57,6 +52,7 @@ class Dashboard extends React.Component {
     this.state = {
       loading: true,
     };
+
   }
 
   async getInfo() {
@@ -67,6 +63,10 @@ class Dashboard extends React.Component {
       console.log(response.data.Global);
 
       this.setState({ loading: false });
+
+      if(this.props.setIsLoadingDataDoneState){
+        this.props.setIsLoadingDataDoneState();
+      }
     });
   }
 
