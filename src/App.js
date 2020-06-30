@@ -36,7 +36,7 @@ function App() {
         <div className="content">
         <Switch>
           <Route exact path="/">
-            <Home />
+            <CountryInfo name='Vietnam'/>
           </Route>
           <Route path="/country/:name" component={CountryInfo}>
           </Route>
