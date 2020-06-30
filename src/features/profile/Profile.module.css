@@ -1,0 +1,39 @@
+.wrapper {
+  margin-left: 40px;
+}
+
+.header {
+  width: fit-content;
+
+  margin: 0 auto;
+
+  font-size: 50px;
+
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.itemInput {
+  display: block;
+  padding: 20px;
+  padding-left: 0px;
+}
+
+.itemInput p {
+  margin-bottom: 10px;
+}
+
+.itemInput input {
+  font-size: 20px;
+  box-shadow: none;
+  width: 500px;
+  padding: 10px;
+}
+
+.submit {
+  padding: 10px;
+  font-size: 20px;
+  margin-left: auto;
+
+  cursor: pointer;
+}

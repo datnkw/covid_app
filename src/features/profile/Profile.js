@@ -47,27 +47,27 @@ class Profile extends React.Component {
     };
 
     return (
+      <div className={styles.wrapper}>
+        <h1 className={styles.header}>Your profile</h1>
       <form onSubmit={this.handleSubmit}>
         {" "}
         {Object.keys(this.state).map((item) =>  {
           return (
-          <div key={item}>
-            <label >
-              {" "}
-              {labels[item]}:
-              <input
+          <div className={styles.itemInput} key={item}>
+            <p>{labels[item]}:</p>
+            <input
                 name={[item]}
                 type="text"
                 value={this.state[item]}
                 onChange={this.handleChange}
-              />{" "}
-            </label>{" "}
-            <br />
+              />
+            {/* <br /> */}
           </div>
         )}
         )}
-        <input type="submit" value="Submit" />
+        <input className={styles.submit} type="submit" value="Submit" />
       </form>
+      </div>
     );
   }
 }
