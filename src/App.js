@@ -2,6 +2,7 @@ import React from 'react';
 import SideBar from "./features/sideBar/SideBar";
 import Dashboard from "./features/dashboard/Dashboard";
 import CountryInfo from "./features/countryItem/CountryInfo";
+import Profile from "./features/profile/Profile";
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -44,7 +45,7 @@ function App() {
             <Dashboard />
           </Route>
           <Route path="/profile">
-            <About />
+            <Profile />
           </Route>
         </Switch>
         </div>
