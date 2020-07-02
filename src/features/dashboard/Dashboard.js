@@ -3,6 +3,7 @@ import axios from "axios";
 import Loading from "../loading/Loading";
 import InfoByCard from "../InfoByCase/InfoByCase"
 import config from "../../config.json";
+import SplashScreen from "../splashScreen/SplashScreen";
 import {
   Link
 } from "react-router-dom";
@@ -64,9 +65,7 @@ class Dashboard extends React.Component {
 
       this.setState({ loading: false });
 
-      if(this.props.setIsLoadingDataDoneState){
-        this.props.setIsLoadingDataDoneState();
-      }
+      this.props.setVisibilitySplashScreen();
     });
   }
 
@@ -75,6 +74,10 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    if(!this.props.hasShowOffSplashScreen) {
+      return <SplashScreen />
+    }
+
     if (this.state.loading) {
       return <Loading />;
     }
