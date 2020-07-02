@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./Profile.module.css";
+import firebase from "./firebase";
+import Loading from "../loading/Loading";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Profile extends React.Component {
       location: "",
       healthStatus: "",
       isMeetingRelateCovid: "",
+      loading: true
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -32,7 +35,60 @@ class Profile extends React.Component {
         " " +
         this.state.lastName
     );
+
+    firebase.database().ref('profiles/' + this.profileID).set({
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      location: this.state.location,
+      healthStatus: this.state.healthStatus,
+      isMeetingRelateCovid: this.state.isMeetingRelateCovid,
+      username: 'admin2',
+      password: 'admin'
+    }, function(error) {
+      if (error) {
+        // The write failed...
+        console.log("false");
+      } else {
+        // Data saved successfully!
+        console.log("success");
+      }
+    });
+
     event.preventDefault();
+  }
+
+  setStateInfo(state) {
+    this.setState({
+      firstName: state.firstName,
+      lastName: state.lastName,
+      email: state.email,
+      location: state.location,
+      healthStatus: state.healthStatus,
+      isMeetingRelateCovid: state.isMeetingRelateCovid
+    }
+    )
+  }
+
+  componentDidMount() {
+    const profileRef = firebase.database().ref('/profiles');
+
+    profileRef.on('value', (snapshot) => {
+      console.log("snapshot: ", snapshot);
+      const profiles = snapshot.val();
+      for(let profile in profiles) {
+        console.log("profile: ", profile);
+
+        console.log("username: ", profiles[profile]);
+
+        if(profiles[profile].username === 'admin2') {
+          this.profileID = profile;
+          this.setStateInfo(profiles[profile]);
+          this.setState({loading: false});
+          break;
+        }
+      }
+    })
   }
 
   render() {
@@ -45,6 +101,10 @@ class Profile extends React.Component {
       isMeetingRelateCovid:
         "Are you meeting someone who is related to Covid-19",
     };
+
+    if (this.state.loading) {
+      return <Loading />;
+    }
 
     return (
       <div className={styles.wrapper}>
