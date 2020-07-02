@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import Loading from "../loading/Loading";
 import config from "../../config.json";
-import InfoByCase from "../InfoByCase/InfoByCase"
+import InfoByCase from "../InfoByCase/InfoByCase";
+import SplashScreen from "../splashScreen/SplashScreen";
 import styles from "./CountryInfo.module.css";
 
 class ByDateItem extends React.Component {
@@ -106,9 +107,7 @@ class CountryInfo extends React.Component {
 
       this.setState({ loading: false });
 
-      if(this.props.setIsLoadingDataDoneState){
-        this.props.setIsLoadingDataDoneState();
-      }
+      this.props.setVisibilitySplashScreen();
     });
   }
 
@@ -117,6 +116,10 @@ class CountryInfo extends React.Component {
   }
 
   render() {
+    if(!this.props.hasShowOffSplashScreen) {
+      return <SplashScreen />
+    }
+
     if (this.state.loading) {
       return <Loading />;
     }

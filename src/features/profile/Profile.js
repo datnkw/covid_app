@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./Profile.module.css";
 import firebase from "./firebase";
 import Loading from "../loading/Loading";
+import SplashScreen from "../splashScreen/SplashScreen";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -85,6 +86,7 @@ class Profile extends React.Component {
           this.profileID = profile;
           this.setStateInfo(profiles[profile]);
           this.setState({loading: false});
+          this.props.setVisibilitySplashScreen();
           break;
         }
       }
@@ -101,6 +103,10 @@ class Profile extends React.Component {
       isMeetingRelateCovid:
         "Are you meeting someone who is related to Covid-19",
     };
+
+    if(!this.props.hasShowOffSplashScreen) {
+      return <SplashScreen />
+    }
 
     if (this.state.loading) {
       return <Loading />;
