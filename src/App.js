@@ -53,10 +53,9 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("hasShowOffSplashScreen: ", this.state.hasShowOffSplashScreen)
-    if(!this.state.hasShowOffSplashScreen) {
-      return (<SplashScreen setIsTimeOutSplashScreenState={this.setIsTimeOutSplashScreenState}/>);
-    }
+    // if(!this.state.hasShowOffSplashScreen) {
+    //   return (<SplashScreen setIsTimeOutSplashScreenState={this.setIsTimeOutSplashScreenState}/>);
+    // }
 
     return (
       <div className="App">
