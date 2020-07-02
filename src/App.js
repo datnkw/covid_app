@@ -3,63 +3,69 @@ import SideBar from "./features/sideBar/SideBar";
 import Dashboard from "./features/dashboard/Dashboard";
 import CountryInfo from "./features/countryItem/CountryInfo";
 import Profile from "./features/profile/Profile";
-import SplashScreen from "./features/splashScreen/SplashScreen";
+// import SplashScreen from "./features/splashScreen/SplashScreen";
 import HandleOffline from "./features/handleOffline/HandleOffline";
 import "./App.css";
+
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useParams
 } from "react-router-dom";
 
+function RenderCountryInfo(props) {
+  let { name } = useParams();
+
+  return (
+    <CountryInfo
+      name={name}
+      hasShowOffSplashScreen={props.hasShowOffSplashScreen}
+      setVisibilitySplashScreen={props.setVisibilitySplashScreen}
+    />
+  );
+}
+
 class App extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
       hasShowOffSplashScreen: false,
       isTimeOutSplashScreen: false,
-      isLoadingDataDone: false
-    }
+      isLoadingDataDone: false,
+    };
 
-    this.setIsTimeOutSplashScreenState = this.setIsTimeOutSplashScreenState.bind(this);
+    this.setIsTimeOutSplashScreenState = this.setIsTimeOutSplashScreenState.bind(
+      this
+    );
     this.setIsLoadingDataDoneState = this.setIsLoadingDataDoneState.bind(this);
     this.setVisibilitySplashScreen = this.setVisibilitySplashScreen.bind(this);
   }
 
-  setIsTimeOutSplashScreenState(){
+  setIsTimeOutSplashScreenState() {
     this.setState({
-      isTimeOutSplashScreen: true
-    })
-    this.setVisibilitySplashScreen()
+      isTimeOutSplashScreen: true,
+    });
+    this.setVisibilitySplashScreen();
   }
 
-  setIsLoadingDataDoneState(){
-   
+  setIsLoadingDataDoneState() {
     this.setState({
-      isLoadingDataDone: true
-    })
-    this.setVisibilitySplashScreen()
+      isLoadingDataDone: true,
+    });
+    this.setVisibilitySplashScreen();
   }
 
   setVisibilitySplashScreen() {
-    // console.log("isTimeOutSplashScreen: ", this.isTimeOutSplashScreen)
-    // if(this.state.isLoadingDataDone && this.isTimeOutSplashScreen) {
-    if(this.state.isTimeOutSplashScreen) {
-      this.setState({
-        hasShowOffSplashScreen: true
-      })
-    }
+    this.setState({
+      hasShowOffSplashScreen: true,
+    });
   }
 
   render() {
-    // if(!this.state.hasShowOffSplashScreen) {
-    //   return (<SplashScreen setIsTimeOutSplashScreenState={this.setIsTimeOutSplashScreenState}/>);
-    // }
-
     return (
       <div className="App">
-        
         <Router>
           <div className="App">
             <SideBar
@@ -79,17 +85,33 @@ class App extends React.Component {
               ]}
             />
             <div className="content">
-            <HandleOffline />
+              <HandleOffline />
               <Switch>
                 <Route exact path="/">
-                  <CountryInfo name="Vietnam"/>
+                  <CountryInfo
+                    name="Vietnam"
+                    hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
+                    setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                  />
                 </Route>
-                <Route path="/country/:name" component={CountryInfo}></Route>
+                {/* <Route path="/country/:name" component={CountryInfo}></Route> */}
+                <Route path="/country/:name">
+                  <RenderCountryInfo
+                    hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
+                    setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                  />
+                </Route>
                 <Route path="/world">
-                  <Dashboard setIsLoadingDataDoneState={this.setIsLoadingDataDoneState}/>
+                  <Dashboard
+                    hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
+                    setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                  />
                 </Route>
                 <Route path="/profile">
-                  <Profile setIsLoadingDataDoneState={this.setIsLoadingDataDoneState}/>
+                  <Profile
+                    hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
+                    setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                  />
                 </Route>
               </Switch>
             </div>
