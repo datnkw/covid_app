@@ -11,11 +11,11 @@ class Loading extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(
-      () => {
-        this.props.setIsTimeOutSplashScreenState();
-      }, 3000
-    )
+    // setTimeout(
+    //   () => {
+    //     this.props.setIsTimeOutSplashScreenState();
+    //   }, 3000
+    // )
   }
 
   // componentWillUnmount() {
