@@ -34,6 +34,7 @@ class App extends React.Component {
       hasShowOffSplashScreen: false,
       isTimeOutSplashScreen: false,
       isLoadingDataDone: false,
+      itemSideBarChoosen: ''
     };
 
     this.setIsTimeOutSplashScreenState = this.setIsTimeOutSplashScreenState.bind(
@@ -83,6 +84,7 @@ class App extends React.Component {
                   to: "/profile",
                 },
               ]}
+              itemSideBarChoosen={this.state.itemSideBarChoosen}
             />
             <div className="content">
               <HandleOffline />
@@ -92,6 +94,7 @@ class App extends React.Component {
                     name="Vietnam"
                     hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
                     setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                    itemSideBarChoosen={this.state.itemSideBarChoosen}
                   />
                 </Route>
                 {/* <Route path="/country/:name" component={CountryInfo}></Route> */}
@@ -99,12 +102,14 @@ class App extends React.Component {
                   <RenderCountryInfo
                     hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
                     setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                    itemSideBarChoosen={this.state.itemSideBarChoosen}
                   />
                 </Route>
                 <Route path="/world">
                   <Dashboard
                     hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
                     setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                    itemSideBarChoosen={this.state.itemSideBarChoosen}
                   />
                 </Route>
                 <Route path="/profile">
