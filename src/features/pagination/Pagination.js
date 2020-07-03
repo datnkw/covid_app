@@ -98,26 +98,39 @@ class Pagination extends React.Component {
     this.state = {
       isVisibleLeft: false,
       isVisibleRight: false,
+      valueBtn: [0, 0, 0, 0, 0]
     };
-
-    this.valueBtn = [0, 0, 0, 0, 0];
   }
 
   componentWillMount() {
+    console.log("componentWillMoult")
     const {page, maxPage} = this.props;
-
-    this.valueBtn = [...setValueBtn(page, maxPage)];
+    const {valueBtn} = this.state;
+    const newValueBth = [...setValueBtn(page, maxPage)];
+    
+    if(valueBtn != newValueBth) {
+      this.setState({
+        valueBtn: [...newValueBth]
+      })
+    }
   }
 
-  componentWillUpdate() {
-    const {page, maxPage} = this.props;
+  componentWillReceiveProps(nextProps) {
+    console.log("componentWillUpdate")
+    const {page, maxPage} = nextProps;
+    const {valueBtn} = this.state;
+    const newValueBth = [...setValueBtn(page, maxPage)];
 
-    this.valueBtn = [...setValueBtn(page, maxPage)];
+    if(valueBtn != newValueBth) {
+      this.setState({
+        valueBtn: [...newValueBth]
+      })
+    }
   }
 
   render() {
     const {page, maxPage, setPage} = this.props;
-    const valueBtn = this.valueBtn;
+    const valueBtn = this.state.valueBtn;
     //valueBtn = [...setValueBtn(page, maxPage)];
 
     return (
