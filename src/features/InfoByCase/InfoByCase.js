@@ -5,11 +5,12 @@ import classNames from "classnames";
 class InfoByCase extends React.Component {
   render() {
     const { cases } = this.props;
-    // console.log("data in cases when render: ", cases);
-
     return (
+      
       <div className={styles.card}>
-        <div className={classNames(styles.new, styles.info)}>
+        <div className={classNames(styles.new, 
+          styles.info
+          )}>
           <p>
             {" "}
             New confirm: <span> {cases.NewConfirmed} </span>

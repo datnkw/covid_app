@@ -54,10 +54,11 @@ class ByDateItem extends React.Component {
 
   render() {
     const transfomData = this.getData(this.props.item, this.props.preItem);
+    console.log("css father: ",styles.bg);
     //console.log("result get data: ", transfomData);
     return (
       <div>
-        <InfoByCase cases={transfomData} />{" "}
+        <InfoByCase cases={transfomData} css={styles.bg}/>{" "}
       </div>
     );
   }
@@ -158,8 +159,7 @@ class CountryInfo extends React.Component {
     console.log("page: ", page);
     //console.log("max page: ", this.maxPage);
     if(page > 1  && page <= this.maxPage) {
-      this.setState(prev => ( {
-        ...prev,
+      this.setState(( {
         page
       }));
   }

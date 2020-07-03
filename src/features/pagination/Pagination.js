@@ -60,6 +60,10 @@ function setValueBtn(page, maxPage){
   return resultArr;
 }
 
+function compareArrays(arr, secondArr) {
+  return JSON.stringify(arr) === JSON.stringify(secondArr);
+}
+
 class BlankBtn extends React.Component {
   render() {
     return (
@@ -102,26 +106,44 @@ class Pagination extends React.Component {
     };
   }
 
-  componentWillMount() {
-    console.log("componentWillMoult")
+  // componentDidMount(nextProps) {
+  //   console.log("componentWillMoult")
+  //   const {page, maxPage} = nextProps;
+  //   const {valueBtn} = this.state;
+  //   const newValueBth = [...setValueBtn(page, maxPage)];
+
+  //   if(valueBtn != newValueBth) {
+  //     this.setState({
+  //       valueBtn: [...newValueBth]
+  //     })
+  //   }
+  // }
+
+  // componentWillReceiveProps(nextProps) {
+  //   console.log("componentWillUpdate")
+  //   const {page, maxPage} = nextProps;
+  //   const {valueBtn} = this.state;
+  //   const newValueBth = [...setValueBtn(page, maxPage)];
+
+  //   if(valueBtn != newValueBth) {
+  //     this.setState({
+  //       valueBtn: [...newValueBth]
+  //     })
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate")
     const {page, maxPage} = this.props;
-    const {valueBtn} = this.state;
-    const newValueBth = [...setValueBtn(page, maxPage)];
-    
-    if(valueBtn != newValueBth) {
-      this.setState({
-        valueBtn: [...newValueBth]
-      })
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log("componentWillUpdate")
-    const {page, maxPage} = nextProps;
-    const {valueBtn} = this.state;
+    console.log('cho dat 2', {page})
+    const {valueBtn} = prevState;
     const newValueBth = [...setValueBtn(page, maxPage)];
 
-    if(valueBtn != newValueBth) {
+    console.log("valueBtn: ", valueBtn);
+    console.log("newValueBth: ", newValueBth);
+
+    if(!compareArrays(valueBtn, newValueBth)) {
+      console.log("set state componentwillupdate");
       this.setState({
         valueBtn: [...newValueBth]
       })
@@ -132,7 +154,6 @@ class Pagination extends React.Component {
     const {page, maxPage, setPage} = this.props;
     const valueBtn = this.state.valueBtn;
     //valueBtn = [...setValueBtn(page, maxPage)];
-
     return (
       <div className={styles.wrapper}>
         <div 
