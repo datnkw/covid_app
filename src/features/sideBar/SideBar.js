@@ -7,15 +7,9 @@ import styles from "./SideBar.module.css";
 
 class SideBarItem extends React.Component {
 
-  compareName(info, itemSideBarChoosen) {
-    console.log("itemSideBarChoosen:", itemSideBarChoosen, typeof itemSideBarChoosen);
-    console.log("name:", info, typeof info);
-    console.log(itemSideBarChoosen.trim() === info.trim());
-  }
 
   render() {
     const {info, itemSideBarChoosen} = this.props;
-    this.compareName(info.name, itemSideBarChoosen);
     return (
       <Link to={info.to}>
         <div
@@ -47,10 +41,6 @@ class ItemSideBarList extends React.Component {
 }
 
 class SideBar extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {itemSideBarInfoList} = this.props
     return (
