@@ -16,12 +16,13 @@ import {
 
 function RenderCountryInfo(props) {
   let { name } = useParams();
-
+  console.log("name props: ", name);
   return (
     <CountryInfo
       name={name}
       hasShowOffSplashScreen={props.hasShowOffSplashScreen}
       setVisibilitySplashScreen={props.setVisibilitySplashScreen}
+      setItemSideBarChoosen={props.setItemSideBarChoosen}
     />
   );
 }
@@ -37,30 +38,20 @@ class App extends React.Component {
       itemSideBarChoosen: ''
     };
 
-    this.setIsTimeOutSplashScreenState = this.setIsTimeOutSplashScreenState.bind(
-      this
-    );
-    this.setIsLoadingDataDoneState = this.setIsLoadingDataDoneState.bind(this);
+    console.log("constructor test abc");
     this.setVisibilitySplashScreen = this.setVisibilitySplashScreen.bind(this);
-  }
-
-  setIsTimeOutSplashScreenState() {
-    this.setState({
-      isTimeOutSplashScreen: true,
-    });
-    this.setVisibilitySplashScreen();
-  }
-
-  setIsLoadingDataDoneState() {
-    this.setState({
-      isLoadingDataDone: true,
-    });
-    this.setVisibilitySplashScreen();
+    this.setItemSideBarChoosen = this.setItemSideBarChoosen.bind(this);
   }
 
   setVisibilitySplashScreen() {
     this.setState({
       hasShowOffSplashScreen: true,
+    });
+  }
+
+  setItemSideBarChoosen(item) {
+    this.setState({
+      itemSideBarChoosen: item
     });
   }
 
@@ -76,7 +67,7 @@ class App extends React.Component {
                   to: "/",
                 },
                 {
-                  name: "Wolrd",
+                  name: "World",
                   to: "/world",
                 },
                 {
@@ -94,7 +85,7 @@ class App extends React.Component {
                     name="Vietnam"
                     hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
                     setVisibilitySplashScreen={this.setVisibilitySplashScreen}
-                    itemSideBarChoosen={this.state.itemSideBarChoosen}
+                    setItemSideBarChoosen={this.setItemSideBarChoosen}
                   />
                 </Route>
                 {/* <Route path="/country/:name" component={CountryInfo}></Route> */}
@@ -102,20 +93,21 @@ class App extends React.Component {
                   <RenderCountryInfo
                     hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
                     setVisibilitySplashScreen={this.setVisibilitySplashScreen}
-                    itemSideBarChoosen={this.state.itemSideBarChoosen}
+                    setItemSideBarChoosen={this.setItemSideBarChoosen}
                   />
                 </Route>
                 <Route path="/world">
                   <Dashboard
                     hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
                     setVisibilitySplashScreen={this.setVisibilitySplashScreen}
-                    itemSideBarChoosen={this.state.itemSideBarChoosen}
+                    setItemSideBarChoosen={this.setItemSideBarChoosen}
                   />
                 </Route>
                 <Route path="/profile">
                   <Profile
                     hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
                     setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                    setItemSideBarChoosen={this.setItemSideBarChoosen}
                   />
                 </Route>
               </Switch>

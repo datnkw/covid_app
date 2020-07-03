@@ -5,6 +5,7 @@ class Loading extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log("abc");
     this.state = {
       hasShowUp: false,
     };
