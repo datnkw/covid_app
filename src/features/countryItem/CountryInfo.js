@@ -22,6 +22,18 @@ class ByDateItem extends React.Component {
   //   "Date": "2020-06-24T00:00:00Z"
   //  }
 
+  constructor(props) {
+    super(props);
+
+    //console.log("this.props.setItemSideBarChoosen: ", this.props.setItemSideBarChoosen)
+    console.log("name vietnam: ", this.props.name);
+    if (this.props.name === "Vietnam") {
+      this.props.setItemSideBarChoosen("Vietnam");
+    } else {
+      this.props.setItemSideBarChoosen("World");
+    }
+  }
+
   getData(item, preItem) {
     const TotalConfirmed = item.Confirmed;
     const TotalDeaths = item.Deaths;
@@ -36,8 +48,8 @@ class ByDateItem extends React.Component {
       TotalRecovered,
       NewConfirmed,
       NewDeaths,
-      NewRecovered
-    }
+      NewRecovered,
+    };
   }
 
   render() {
@@ -45,16 +57,18 @@ class ByDateItem extends React.Component {
     //console.log("result get data: ", transfomData);
     return (
       <div>
-        <InfoByCase cases={transfomData}/>
+        <InfoByCase cases={transfomData} />{" "}
       </div>
     );
   }
 }
 
 class ByDateItemList extends React.Component {
-  convertNormalFormatDate(dateString){
+  convertNormalFormatDate(dateString) {
     const date = new Date(dateString);
-    return date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
+    return (
+      date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+    );
   }
 
   render() {
@@ -63,33 +77,32 @@ class ByDateItemList extends React.Component {
 
     let result = [];
 
-    for(let i = byDateItemList.length - 1; i >= 0; i--) {
-        result.push(
+    for (let i = byDateItemList.length - 1; i >= 0; i--) {
+      result.push(
         <div key={i}>
-          <p>{this.convertNormalFormatDate(byDateItemList[i].Date)}</p>
-        <ByDateItem 
-                       
-                      item={byDateItemList[i]}
-                      preItem= {!i ? null : byDateItemList[i - 1]}
-                      />
-                      </div>)
+          <p> {this.convertNormalFormatDate(byDateItemList[i].Date)} </p>{" "}
+          <ByDateItem
+            item={byDateItemList[i]}
+            preItem={!i ? null : byDateItemList[i - 1]}
+            name={this.props.name}
+            setItemSideBarChoosen={this.props.setItemSideBarChoosen}
+          />{" "}
+        </div>
+      );
     }
 
-    return (
-      <div>
-      {result}
-      </div>
-    )
+    return <div> {result} </div>;
   }
 }
 
 class CountryInfo extends React.Component {
-
   constructor(props) {
     super(props);
 
     // const paramsName = this.props.match.params.name;
-    this.countryName = (this.props.match ? this.props.match.params.name : props.name);
+    this.countryName = this.props.match
+      ? this.props.match.params.name
+      : props.name;
     console.log("countryName: ", this.countryName);
 
     this.state = {
@@ -98,14 +111,13 @@ class CountryInfo extends React.Component {
   }
 
   async getInfo() {
-    console.log('load data country info begin');
     const url = config.api + "/dayone/country/" + this.countryName;
     await axios.get(url).then((response) => {
       this.data = response.data;
 
-      console.log('load data country info done');
-
-      this.setState({ loading: false });
+      this.setState({
+        loading: false,
+      });
 
       this.props.setVisibilitySplashScreen();
     });
@@ -116,8 +128,8 @@ class CountryInfo extends React.Component {
   }
 
   render() {
-    if(!this.props.hasShowOffSplashScreen) {
-      return <SplashScreen />
+    if (!this.props.hasShowOffSplashScreen) {
+      return <SplashScreen />;
     }
 
     if (this.state.loading) {
@@ -126,10 +138,14 @@ class CountryInfo extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <div className={styles.header}>Information of {this.countryName}</div>
-        <ByDateItemList byDateItemList={this.data} />
+        <div className={styles.header}> Information of {this.countryName} </div>{" "}
+        <ByDateItemList 
+          byDateItemList={this.data}
+          name={this.props.name} 
+          setItemSideBarChoosen={this.props.setItemSideBarChoosen}
+        />{" "}
       </div>
-    )
+    );
   }
 }
 
