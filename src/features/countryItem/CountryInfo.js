@@ -4,7 +4,10 @@ import Loading from "../loading/Loading";
 import config from "../../config.json";
 import InfoByCase from "../InfoByCase/InfoByCase";
 import SplashScreen from "../splashScreen/SplashScreen";
+import Pagination from "../pagination/Pagination";
 import styles from "./CountryInfo.module.css";
+
+const ITEM_PER_PAGE = 5;
 
 class ByDateItem extends React.Component {
   // {
@@ -24,9 +27,6 @@ class ByDateItem extends React.Component {
 
   constructor(props) {
     super(props);
-
-    //console.log("this.props.setItemSideBarChoosen: ", this.props.setItemSideBarChoosen)
-    console.log("name vietnam: ", this.props.name);
     if (this.props.name === "Vietnam") {
       this.props.setItemSideBarChoosen("Vietnam");
     } else {
@@ -95,6 +95,17 @@ class ByDateItemList extends React.Component {
   }
 }
 
+function getInfoByPage(page, data) {
+  const tmp = data.length - page*ITEM_PER_PAGE
+  const positionFirstItem = tmp < 0 ? 0 : tmp;
+
+  return data.slice(positionFirstItem, positionFirstItem + ITEM_PER_PAGE);
+}
+
+function getPages(amountItem) {
+  return (Math.floor(amountItem / ITEM_PER_PAGE) + (amountItem % ITEM_PER_PAGE === 0 ? 0 : 1));
+}
+
 class CountryInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -105,15 +116,28 @@ class CountryInfo extends React.Component {
       : props.name;
     console.log("countryName: ", this.countryName);
 
+    this.setPage = this.setPage.bind(this);
+
     this.state = {
       loading: true,
+      page: 1
     };
   }
 
   async getInfo() {
+    console.log("this get info: ", this);
+
     const url = config.api + "/dayone/country/" + this.countryName;
     await axios.get(url).then((response) => {
+      console.log("data length: ", response.data.length);
+
+      this.maxPage = getPages(response.data.length);
+
+      console.log("max page: ", this.maxPage);
+
       this.data = response.data;
+
+      //this.currentData = getInfoByPage(this.state.page, this.data);
 
       this.setState({
         loading: false,
@@ -121,6 +145,18 @@ class CountryInfo extends React.Component {
 
       this.props.setVisibilitySplashScreen();
     });
+  }
+
+ 
+
+  setPage(page) {
+    //console.log("page: ", page);
+    //console.log("max page: ", this.maxPage);
+    if(page > 1  && page <= this.maxPage) {
+    this.setState({
+      page: page
+    });
+  }
   }
 
   async componentDidMount() {
@@ -140,10 +176,12 @@ class CountryInfo extends React.Component {
       <div className={styles.wrapper}>
         <div className={styles.header}> Information of {this.countryName} </div>{" "}
         <ByDateItemList 
-          byDateItemList={this.data}
+          byDateItemList={getInfoByPage(this.state.page, this.data)}
           name={this.props.name} 
           setItemSideBarChoosen={this.props.setItemSideBarChoosen}
         />{" "}
+
+        <Pagination setPage={this.setPage} page={this.state.page}/>
       </div>
     );
   }
