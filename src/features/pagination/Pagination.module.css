@@ -9,8 +9,16 @@
 }
 
 .btnPagination {
+  position: relative;
+
   background-color: #6b8e23;
   color: #fff;
+
+  /* padding: 30px; */
+  width: 80px;
+  height: 80px;
+
+  border-radius: 5px;
 
   display: flex;
   justify-content: center;
@@ -21,9 +29,18 @@
   cursor: pointer;
 }
 
+.hiddenBtn {
+  display: none !important;
+}
+
+.blankBtn {
+  background-color: #fff;
+  color: #6b8e23;
+  cursor: default !important;
+}
+
 .preBtn {
-  position: relative;
-  padding: 20px;
+
 }
 
 .preBtn:after{
@@ -32,8 +49,7 @@
 }
 
 .nextBtn {
-  position: relative;
-  padding: 20px;
+
 }
 
 .nextBtn:after{
