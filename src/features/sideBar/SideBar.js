@@ -7,15 +7,21 @@ import styles from "./SideBar.module.css";
 
 class SideBarItem extends React.Component {
 
+  compareName(info, itemSideBarChoosen) {
+    console.log("itemSideBarChoosen:", itemSideBarChoosen, typeof itemSideBarChoosen);
+    console.log("name:", info, typeof info);
+    console.log(itemSideBarChoosen.trim() === info.trim());
+  }
+
   render() {
-    const {info, isClicked, onClick} = this.props;
+    const {info, itemSideBarChoosen} = this.props;
+    this.compareName(info.name, itemSideBarChoosen);
     return (
       <Link to={info.to}>
         <div
           className={classNames(styles["side-bar-item"], {
-            [styles.clicked]: isClicked === info.name,
+            [styles.clicked]: itemSideBarChoosen === info.name,
           })}
-          onClick={() => onClick(info.name)}
         >
           {info.name}
         </div>
@@ -27,14 +33,13 @@ class SideBarItem extends React.Component {
 class ItemSideBarList extends React.Component {
 
   render() {
-    const {itemLists, isClicked, onClick} = this.props
+    const {itemLists, itemSideBarChoosen} = this.props
     return itemLists
       ? itemLists.map((item) => (
           <SideBarItem
             key={item.name ? item.name : ""}
             info={item}
-            isClicked={isClicked}
-            onClick={onClick}
+            itemSideBarChoosen={itemSideBarChoosen}
           />
         ))
       : null;
@@ -44,16 +49,6 @@ class ItemSideBarList extends React.Component {
 class SideBar extends React.Component {
   constructor(props) {
     super(props);
-    this.clickItem = this.clickItem.bind(this);
-    this.state = {
-      isClicked: "Vietnam",
-    };
-  }
-
-  clickItem(name) {
-    this.setState({
-      isClicked: name
-    });
   }
 
   render() {
@@ -67,8 +62,7 @@ class SideBar extends React.Component {
 
         <ItemSideBarList
           itemLists={itemSideBarInfoList}
-          isClicked={this.state.isClicked}
-          onClick={this.clickItem}
+          itemSideBarChoosen={this.props.itemSideBarChoosen}
         />
       </div>
     );

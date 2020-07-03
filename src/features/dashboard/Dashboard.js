@@ -71,6 +71,8 @@ class Dashboard extends React.Component {
 
   async componentDidMount() {
     await this.getInfo();
+    console.log("this.props.setItemSideBarChoosen ", this.props.setItemSideBarChoosen)
+    this.props.setItemSideBarChoosen('World');
   }
 
   render() {
