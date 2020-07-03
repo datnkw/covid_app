@@ -96,10 +96,14 @@ class ByDateItemList extends React.Component {
 }
 
 function getInfoByPage(page, data) {
-  const tmp = data.length - page*ITEM_PER_PAGE
-  const positionFirstItem = tmp < 0 ? 0 : tmp;
+  const positionFirstItem = data.length - page*ITEM_PER_PAGE
 
+  if(positionFirstItem >= 0) {
   return data.slice(positionFirstItem, positionFirstItem + ITEM_PER_PAGE);
+} else {
+  console.log(data.slice(0, ITEM_PER_PAGE + positionFirstItem));
+  return data.slice(0, ITEM_PER_PAGE + positionFirstItem);
+}
 }
 
 function getPages(amountItem) {
@@ -150,12 +154,12 @@ class CountryInfo extends React.Component {
  
 
   setPage(page) {
-    //console.log("page: ", page);
+    console.log("page: ", page);
     //console.log("max page: ", this.maxPage);
     if(page > 1  && page <= this.maxPage) {
-    this.setState({
-      page: page
-    });
+      this.setState({
+        page: page
+      });
   }
   }
 
@@ -181,7 +185,7 @@ class CountryInfo extends React.Component {
           setItemSideBarChoosen={this.props.setItemSideBarChoosen}
         />{" "}
 
-        <Pagination setPage={this.setPage} page={this.state.page}/>
+        <Pagination setPage={this.setPage} page={this.state.page} maxPage={this.maxPage}/>
       </div>
     );
   }
