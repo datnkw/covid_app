@@ -154,12 +154,14 @@ class CountryInfo extends React.Component {
  
 
   setPage(page) {
+    console.log("set page");
     console.log("page: ", page);
     //console.log("max page: ", this.maxPage);
     if(page > 1  && page <= this.maxPage) {
-      this.setState({
-        page: page
-      });
+      this.setState(prev => ( {
+        ...prev,
+        page
+      }));
   }
   }
 
