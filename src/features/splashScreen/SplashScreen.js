@@ -4,27 +4,12 @@ import styles from "./SplashScreen.module.css";
 class Loading extends React.Component {
   constructor(props) {
     super(props);
-
-    console.log("abc");
     this.state = {
       hasShowUp: false,
     };
   }
 
-  componentDidMount() {
-    // setTimeout(
-    //   () => {
-    //     this.props.setIsTimeOutSplashScreenState();
-    //   }, 3000
-    // )
-  }
-
-  // componentWillUnmount() {
-  //   this.setState({hasShowUp: true})
-  // }
-
   render() {
-    // if (!this.hasShowUp) {
       return (
         <div className={styles.splashWrapper}>
           <div className={styles.logo}></div>
