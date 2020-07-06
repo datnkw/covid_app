@@ -3,6 +3,8 @@ import SideBar from "./features/sideBar/SideBar";
 import Dashboard from "./features/dashboard/Dashboard";
 import CountryInfo from "./features/countryItem/CountryInfo";
 import Profile from "./features/profile/Profile";
+import Login from "./features/login/Login";
+import {UserContext} from "./features/login/Login";
 // import SplashScreen from "./features/splashScreen/SplashScreen";
 import HandleOffline from "./features/handleOffline/HandleOffline";
 import "./App.css";
@@ -35,7 +37,8 @@ class App extends React.Component {
       hasShowOffSplashScreen: false,
       isTimeOutSplashScreen: false,
       isLoadingDataDone: false,
-      itemSideBarChoosen: ''
+      itemSideBarChoosen: '',
+
     };
 
     console.log("constructor test abc");
@@ -88,7 +91,6 @@ class App extends React.Component {
                     setItemSideBarChoosen={this.setItemSideBarChoosen}
                   />
                 </Route>
-                {/* <Route path="/country/:name" component={CountryInfo}></Route> */}
                 <Route path="/country/:name">
                   <RenderCountryInfo
                     hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
@@ -110,10 +112,14 @@ class App extends React.Component {
                     setItemSideBarChoosen={this.setItemSideBarChoosen}
                   />
                 </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
               </Switch>
             </div>
           </div>
         </Router>
+        
       </div>
     );
   }
