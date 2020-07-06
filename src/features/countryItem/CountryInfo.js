@@ -58,7 +58,7 @@ class ByDateItem extends React.Component {
     //console.log("result get data: ", transfomData);
     return (
       <div>
-        <InfoByCase cases={transfomData} css={styles.bg}/>{" "}
+        <InfoByCase cases={transfomData}/>{" "}
       </div>
     );
   }
@@ -74,14 +74,13 @@ class ByDateItemList extends React.Component {
 
   render() {
     const { byDateItemList } = this.props;
-    //console.log("byDateItemList: ", byDateItemList);
 
     let result = [];
 
     for (let i = byDateItemList.length - 1; i >= 0; i--) {
       result.push(
         <div key={i}>
-          <p> {this.convertNormalFormatDate(byDateItemList[i].Date)} </p>{" "}
+          <p className={styles.headerTime}> {this.convertNormalFormatDate(byDateItemList[i].Date)} </p>{" "}
           <ByDateItem
             item={byDateItemList[i]}
             preItem={!i ? null : byDateItemList[i - 1]}
