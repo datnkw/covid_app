@@ -129,7 +129,6 @@ class Profile extends React.Component {
                 value={this.state[item]}
                 onChange={this.handleChange}
               />
-            {/* <br /> */}
           </div>
         )}
         )}
