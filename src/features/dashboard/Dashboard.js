@@ -4,10 +4,13 @@ import Loading from "../loading/Loading";
 import InfoByCard from "../InfoByCase/InfoByCase"
 import config from "../../config.json";
 import SplashScreen from "../splashScreen/SplashScreen";
+import SideBar from "../sideBar/SideBar";
+import className from "classnames";
 import {
   Link
 } from "react-router-dom";
 import styles from "./Dashboard.module.css";
+import "../../App.css";
 
 class CountryItem extends React.Component {
   // {
@@ -85,11 +88,14 @@ class Dashboard extends React.Component {
     }
 
     return (
-      <div className={styles.wrapper}>
+      <div className="full-width">
+        <SideBar itemSideBarChoosen='World'/>
+        <div className={className(styles.wrapper, "content")}>
         <InfoByCard cases={this.summaryGlobalInfo}/>
         <div className={styles.countryItemWrapper}>
           <CountryItemList countryItemList={this.summaryCountries} />
         </div>
+      </div>
       </div>
     );
   }

@@ -62,25 +62,6 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
-          <div className="App">
-            <SideBar
-              itemSideBarInfoList={[
-                {
-                  name: "Vietnam",
-                  to: "/",
-                },
-                {
-                  name: "World",
-                  to: "/world",
-                },
-                {
-                  name: "Profile",
-                  to: "/profile",
-                },
-              ]}
-              itemSideBarChoosen={this.state.itemSideBarChoosen}
-            />
-            <div className="content">
               <HandleOffline />
               <Switch>
                 <Route exact path="/">
@@ -116,8 +97,6 @@ class App extends React.Component {
                   <Login />
                 </Route>
               </Switch>
-            </div>
-          </div>
         </Router>
         
       </div>
