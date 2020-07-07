@@ -2,7 +2,10 @@ import React from "react";
 import styles from "./Profile.module.css";
 import firebase from "./firebase";
 import Loading from "../loading/Loading";
+import SideBar from "../sideBar/SideBar";
+import className from "classnames";
 import SplashScreen from "../splashScreen/SplashScreen";
+import "../../App.css";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -25,7 +28,6 @@ class Profile extends React.Component {
 
   handleChange(event) {
     const target = event.target;
-    console.log("target: ", target);
     this.setState({
       [target.name]: [target.value],
     });
@@ -74,25 +76,23 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    const profileRef = firebase.database().ref('/profiles');
+    //const profileRef = firebase.database().ref('/profiles');
 
-    profileRef.on('value', (snapshot) => {
-      console.log("snapshot: ", snapshot);
-      const profiles = snapshot.val();
-      for(let profile in profiles) {
-        console.log("profile: ", profile);
-
-        console.log("username: ", profiles[profile]);
-
-        if(profiles[profile].username === 'admin2') {
-          this.profileID = profile;
-          this.setStateInfo(profiles[profile]);
-          this.setState({loading: false});
-          this.props.setVisibilitySplashScreen();
-          break;
-        }
-      }
-    })
+    // profileRef.on('value', (snapshot) => {
+    //   console.log("snapshot: ", snapshot);
+    //   const profiles = snapshot.val();
+    //   for(let profile in profiles) {
+    //     if(profiles[profile].username === 'admin2') {
+    //       this.profileID = profile;
+    //       this.setStateInfo(profiles[profile]);
+    //       this.setState({loading: false});
+    //       this.props.setVisibilitySplashScreen();
+    //       break;
+    //     }
+    //   }
+    // })
+    this.setState({loading: false});
+    this.props.setVisibilitySplashScreen();
   }
 
   render() {
@@ -115,11 +115,13 @@ class Profile extends React.Component {
     }
 
     return (
-      <div className={styles.wrapper}>
+      <div className="full-width">
+        <SideBar itemSideBarChoosen='Profile'/>
+        <div className={className(styles.wrapper, "content")}>
         <h1 className={styles.header}>Your profile</h1>
       <form onSubmit={this.handleSubmit}>
         {" "}
-        {Object.keys(this.state).map((item) =>  {
+        {Object.keys(labels).map((item) =>  {
           return (
           <div className={styles.itemInput} key={item}>
             <p>{labels[item]}:</p>
@@ -134,6 +136,7 @@ class Profile extends React.Component {
         )}
         <input className={styles.submit} type="submit" value="Submit" />
       </form>
+      </div>
       </div>
     );
   }

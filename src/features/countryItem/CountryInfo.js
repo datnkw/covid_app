@@ -5,7 +5,10 @@ import config from "../../config.json";
 import InfoByCase from "../InfoByCase/InfoByCase";
 import SplashScreen from "../splashScreen/SplashScreen";
 import Pagination from "../pagination/Pagination";
+import SideBar from "../sideBar/SideBar";
+import className from "classnames";
 import styles from "./CountryInfo.module.css";
+import "../../App.css";
 
 const ITEM_PER_PAGE = 5;
 
@@ -178,7 +181,9 @@ class CountryInfo extends React.Component {
     }
 
     return (
-      <div className={styles.wrapper}>
+      <div className="full-width">
+        <SideBar itemSideBarChoosen={this.countryName === 'Vietnam' ? 'Vietnam' : 'World'}/>
+      <div className={className(styles.wrapper, "content")}>
         <div className={styles.header}> Information of {this.countryName} </div>{" "}
         <ByDateItemList 
           byDateItemList={getInfoByPage(this.state.page, this.data)}
@@ -187,6 +192,7 @@ class CountryInfo extends React.Component {
         />{" "}
 
         <Pagination setPage={this.setPage} page={this.state.page} maxPage={this.maxPage}/>
+      </div>
       </div>
     );
   }

@@ -42,7 +42,21 @@ class ItemSideBarList extends React.Component {
 
 class SideBar extends React.Component {
   render() {
-    const {itemSideBarInfoList} = this.props
+    const itemSideBarInfoList = [
+      {
+        name: "Vietnam",
+        to: "/",
+      },
+      {
+        name: "World",
+        to: "/world",
+      },
+      {
+        name: "Profile",
+        to: "/profile",
+      },
+    ];
+
     return (
       <div className={styles["wrapper-side-bar"]}>
         <div className={styles["logo-wrapper"]}>
