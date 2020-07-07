@@ -4,6 +4,7 @@ import styleSplashScreen from "../splashScreen/SplashScreen.module.css";
 import className from "classnames";
 import firebase from "../profile/firebase";
 import {UserContext} from './user-context';
+import { withRouter } from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props) {
@@ -42,24 +43,32 @@ class Login extends React.Component {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorMessage);
+      alert("login failed");
+      return;
       // ...
     });
 
-    const thisClassPresent = this;
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        console.log("login success:", {user});
-        console.log("this usercontext: ",thisClassPresent.context);
-        thisClassPresent.context.login(user.email);
-        console.log("email login: ",thisClassPresent.context.user.email);
-        // ...
-      } else {
-        // User is signed out.
-        // ...
-      }
-    });
-    return result;
+    this.context.login(email);
+
+    this.props.history.push("/");
+
+    // console.log("result: ", result)
+
+    // const thisClassPresent = this;
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //   if (user) {
+    //     // User is signed in.
+    //     console.log("login success:", {user});
+    //     console.log("this usercontext: ",thisClassPresent.context);
+    //     thisClassPresent.context.login(user.email);
+    //     //console.log("email login: ",thisClassPresent.context.user.email);
+    //     // ...
+    //   } else {
+    //     // User is signed out.
+    //     // ...
+    //   }
+    // });
+    // return result;
   }
 
   render() {
@@ -92,4 +101,4 @@ class Login extends React.Component {
   }
 }
 //Login.contextType = UserContext;
-export default Login;
+export default withRouter(Login);
