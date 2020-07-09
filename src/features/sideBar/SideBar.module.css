@@ -4,6 +4,7 @@
   border:solid #fff ;
   border-width: 1px 0px 0px 0px;
   cursor: pointer;
+
 }
 
 a {
@@ -27,6 +28,10 @@ a {
   height: 100vh;
   
   position: fixed;
+
+
+  display: flex;
+  flex-direction: column;
 }
 
 .logo-wrapper {
@@ -46,4 +51,30 @@ a {
   height: 50px;
   background-image: url("../../covid.png");
   background-size: cover;
+}
+
+.authWrapper {
+  flex-grow: 1;
+  min-width: 160px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: flex-end;
+}
+
+.btnHolder {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.btnHolder p {
+  margin-bottom: 20px;
+}
+
+.authBtn {
+  cursor: pointer;
+  font-size: 20px;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #fff;
 }

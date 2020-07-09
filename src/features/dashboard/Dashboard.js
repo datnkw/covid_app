@@ -64,7 +64,6 @@ class Dashboard extends React.Component {
     await axios.get(url).then((response) => {
       this.summaryGlobalInfo = response.data.Global;
       this.summaryCountries = response.data.Countries;
-      console.log(response.data.Global);
 
       this.setState({ loading: false });
 
@@ -74,7 +73,6 @@ class Dashboard extends React.Component {
 
   async componentDidMount() {
     await this.getInfo();
-    console.log("this.props.setItemSideBarChoosen ", this.props.setItemSideBarChoosen)
     this.props.setItemSideBarChoosen('World');
   }
 

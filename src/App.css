@@ -17,6 +17,10 @@
   margin-left: 200px;
 }
 
+.hidden {
+  display: none;
+}
+
 /* div {
   padding: 20px;
   background-color: #000;
