@@ -59,7 +59,7 @@ class ByDateItem extends React.Component {
     const transfomData = this.getData(this.props.item, this.props.preItem);
     return (
       <div>
-        <InfoByCase cases={transfomData}/>{" "}
+        <InfoByCase cases={transfomData} />{" "}
       </div>
     );
   }
@@ -81,7 +81,10 @@ class ByDateItemList extends React.Component {
     for (let i = byDateItemList.length - 1; i >= 0; i--) {
       result.push(
         <div key={i}>
-          <p className={styles.headerTime}> {this.convertNormalFormatDate(byDateItemList[i].Date)} </p>{" "}
+          <p className={styles.headerTime}>
+            {" "}
+            {this.convertNormalFormatDate(byDateItemList[i].Date)}{" "}
+          </p>{" "}
           <ByDateItem
             item={byDateItemList[i]}
             preItem={!i ? null : byDateItemList[i - 1]}
@@ -97,24 +100,26 @@ class ByDateItemList extends React.Component {
 }
 
 function getInfoByPage(page, data) {
-  const positionFirstItem = data.length - page*ITEM_PER_PAGE
+  const positionFirstItem = data.length - page * ITEM_PER_PAGE;
 
-  if(positionFirstItem >= 0) {
-  return data.slice(positionFirstItem, positionFirstItem + ITEM_PER_PAGE);
-} else {
-  return data.slice(0, ITEM_PER_PAGE + positionFirstItem);
-}
+  if (positionFirstItem >= 0) {
+    return data.slice(positionFirstItem, positionFirstItem + ITEM_PER_PAGE);
+  } else {
+    return data.slice(0, ITEM_PER_PAGE + positionFirstItem);
+  }
 }
 
 function getPages(amountItem) {
-  return (Math.floor(amountItem / ITEM_PER_PAGE) + (amountItem % ITEM_PER_PAGE === 0 ? 0 : 1));
+  return (
+    Math.floor(amountItem / ITEM_PER_PAGE) +
+    (amountItem % ITEM_PER_PAGE === 0 ? 0 : 1)
+  );
 }
 
 class CountryInfo extends React.Component {
   constructor(props) {
     super(props);
 
-    // const paramsName = this.props.match.params.name;
     this.countryName = this.props.match
       ? this.props.match.params.name
       : props.name;
@@ -123,34 +128,40 @@ class CountryInfo extends React.Component {
 
     this.state = {
       loading: true,
-      page: 1
+      page: 1,
     };
   }
 
   async getInfo() {
     const url = config.api + "/dayone/country/" + this.countryName;
-    await axios.get(url).then((response) => {
 
+    if(window.navigator.onLine) {
+    await axios.get(url).then((response) => {
       this.maxPage = getPages(response.data.length);
 
       this.data = response.data;
 
-      this.setState({
-        loading: false,
-      });
-
-      this.props.setVisibilitySplashScreen();
+      localStorage.setItem('maxPage', this.maxPage);
+      localStorage.setItem('data', JSON.stringify(this.data));
     });
+  } else {
+    this.maxPage = localStorage.getItem('maxPage');
+    this.data = JSON.parse(localStorage.getItem('data'));
   }
 
- 
+  this.setState({
+    loading: false,
+  });
+
+  this.props.setVisibilitySplashScreen();
+  }
 
   setPage(page) {
-    if(page > 1  && page <= this.maxPage) {
-      this.setState(( {
-        page
-      }));
-  }
+    if (page > 1 && page <= this.maxPage) {
+      this.setState({
+        page,
+      });
+    }
   }
 
   async componentDidMount() {
@@ -168,17 +179,27 @@ class CountryInfo extends React.Component {
 
     return (
       <div className="full-width">
-        <SideBar itemSideBarChoosen={this.countryName === 'Vietnam' ? 'Vietnam' : 'World'}/>
-      <div className={className(styles.wrapper, "content")}>
-        <div className={styles.header}> Information of {this.countryName} </div>{" "}
-        <ByDateItemList 
-          byDateItemList={getInfoByPage(this.state.page, this.data)}
-          name={this.props.name} 
-          setItemSideBarChoosen={this.props.setItemSideBarChoosen}
-        />{" "}
-
-        <Pagination setPage={this.setPage} page={this.state.page} maxPage={this.maxPage}/>
-      </div>
+        <SideBar
+          itemSideBarChoosen={
+            this.countryName === "Vietnam" ? "Vietnam" : "World"
+          }
+        />
+        <div className={className(styles.wrapper, "content")}>
+          <div className={styles.header}>
+            {" "}
+            Information of {this.countryName}{" "}
+          </div>{" "}
+          <ByDateItemList
+            byDateItemList={getInfoByPage(this.state.page, this.data)}
+            name={this.props.name}
+            setItemSideBarChoosen={this.props.setItemSideBarChoosen}
+          />{" "}
+          <Pagination
+            setPage={this.setPage}
+            page={this.state.page}
+            maxPage={this.maxPage}
+          />
+        </div>
       </div>
     );
   }
