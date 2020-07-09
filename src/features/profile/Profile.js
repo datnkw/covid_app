@@ -5,9 +5,12 @@ import Loading from "../loading/Loading";
 import SideBar from "../sideBar/SideBar";
 import className from "classnames";
 import SplashScreen from "../splashScreen/SplashScreen";
+import { UserContext } from "../login/user-context";
+import { withRouter } from "react-router-dom";
 import "../../App.css";
 
 class Profile extends React.Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -16,14 +19,16 @@ class Profile extends React.Component {
       email: "",
       location: "",
       healthStatus: "",
-      isMeetingRelateCovid: "",
-      loading: true
+      meetRelatedCovid: "",
+      loading: true,
     };
+
+    this.db = firebase.firestore();
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    this.props.setItemSideBarChoosen('Profile');
+    this.props.setItemSideBarChoosen("Profile");
   }
 
   handleChange(event) {
@@ -34,6 +39,9 @@ class Profile extends React.Component {
   }
 
   handleSubmit(event) {
+ 
+    event.preventDefault();
+
     alert(
       "A name was submitted: " +
         this.state.firstName +
@@ -41,57 +49,51 @@ class Profile extends React.Component {
         this.state.lastName
     );
 
-    firebase.database().ref('profiles/' + this.profileID).set({
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      location: this.state.location,
-      healthStatus: this.state.healthStatus,
-      isMeetingRelateCovid: this.state.isMeetingRelateCovid,
-      username: 'admin2',
-      password: 'admin'
-    }, function(error) {
-      if (error) {
-        // The write failed...
-        console.log("false");
-      } else {
-        // Data saved successfully!
-        console.log("success");
-      }
-    });
+    this.db
+      .collection("profiles").doc(this.context.authentication.id)
+      .set(
+        {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          email: this.state.email,
+          location: this.state.location,
+          healthStatus: this.state.healthStatus,
+          meetRelatedCovid: this.state.meetRelatedCovid
+        }
+      ).then(function() {
+        alert("Document successfully written!");
+    })
+    .catch(function(error) {
+      alert("Error writing document: ", error);
+    });;
 
-    event.preventDefault();
   }
 
   setStateInfo(state) {
+    console.log("state info: ", state);
     this.setState({
-      firstName: state.firstName,
-      lastName: state.lastName,
-      email: state.email,
-      location: state.location,
-      healthStatus: state.healthStatus,
-      isMeetingRelateCovid: state.isMeetingRelateCovid
-    }
-    )
+      ...state,
+    });
   }
 
   componentDidMount() {
-    //const profileRef = firebase.database().ref('/profiles');
+    console.log("this.context.authentication.id: ", this.context);
 
-    // profileRef.on('value', (snapshot) => {
-    //   console.log("snapshot: ", snapshot);
-    //   const profiles = snapshot.val();
-    //   for(let profile in profiles) {
-    //     if(profiles[profile].username === 'admin2') {
-    //       this.profileID = profile;
-    //       this.setStateInfo(profiles[profile]);
-    //       this.setState({loading: false});
-    //       this.props.setVisibilitySplashScreen();
-    //       break;
-    //     }
-    //   }
-    // })
-    this.setState({loading: false});
+    if (!this.context.authentication.isLogin) {
+      this.props.history.push("/login");
+      return;
+    }
+    this.db
+      .collection("profiles")
+      .doc(this.context.authentication.id)
+      .get()
+      .then((querySnapshot) => {
+        this.setStateInfo(querySnapshot.data());
+        this.setState({
+          loading: false,
+        });
+      });
+    
     this.props.setVisibilitySplashScreen();
   }
 
@@ -99,15 +101,14 @@ class Profile extends React.Component {
     const labels = {
       firstName: "First name",
       lastName: "Last name",
-      email: "Email",
       location: "Location",
       healthStatus: "Health status",
-      isMeetingRelateCovid:
+      meetRelatedCovid:
         "Are you meeting someone who is related to Covid-19",
     };
 
-    if(!this.props.hasShowOffSplashScreen) {
-      return <SplashScreen />
+    if (!this.props.hasShowOffSplashScreen) {
+      return <SplashScreen />;
     }
 
     if (this.state.loading) {
@@ -116,30 +117,30 @@ class Profile extends React.Component {
 
     return (
       <div className="full-width">
-        <SideBar itemSideBarChoosen='Profile'/>
+        <SideBar itemSideBarChoosen="Profile" />
         <div className={className(styles.wrapper, "content")}>
-        <h1 className={styles.header}>Your profile</h1>
-      <form onSubmit={this.handleSubmit}>
-        {" "}
-        {Object.keys(labels).map((item) =>  {
-          return (
-          <div className={styles.itemInput} key={item}>
-            <p>{labels[item]}:</p>
-            <input
-                name={[item]}
-                type="text"
-                value={this.state[item]}
-                onChange={this.handleChange}
-              />
-          </div>
-        )}
-        )}
-        <input className={styles.submit} type="submit" value="Submit" />
-      </form>
-      </div>
+          <h1 className={styles.header}> Your profile </h1>{" "}
+          <form onSubmit={this.handleSubmit}>
+            {" "}
+            {Object.keys(labels).map((item) => {
+              return (
+                <div className={styles.itemInput} key={item}>
+                  <p> {labels[item]}: </p>{" "}
+                  <input
+                    name={[item]}
+                    type="text"
+                    value={this.state[item]}
+                    onChange={this.handleChange}
+                  />{" "}
+                </div>
+              );
+            })}{" "}
+            <input className={styles.submit} type="submit" value="Submit" />
+          </form>{" "}
+        </div>{" "}
       </div>
     );
   }
 }
 
-export default Profile;
+export default withRouter(Profile);

@@ -57,8 +57,6 @@ class ByDateItem extends React.Component {
 
   render() {
     const transfomData = this.getData(this.props.item, this.props.preItem);
-    console.log("css father: ",styles.bg);
-    //console.log("result get data: ", transfomData);
     return (
       <div>
         <InfoByCase cases={transfomData}/>{" "}
@@ -104,7 +102,6 @@ function getInfoByPage(page, data) {
   if(positionFirstItem >= 0) {
   return data.slice(positionFirstItem, positionFirstItem + ITEM_PER_PAGE);
 } else {
-  console.log(data.slice(0, ITEM_PER_PAGE + positionFirstItem));
   return data.slice(0, ITEM_PER_PAGE + positionFirstItem);
 }
 }
@@ -121,7 +118,6 @@ class CountryInfo extends React.Component {
     this.countryName = this.props.match
       ? this.props.match.params.name
       : props.name;
-    console.log("countryName: ", this.countryName);
 
     this.setPage = this.setPage.bind(this);
 
@@ -132,19 +128,12 @@ class CountryInfo extends React.Component {
   }
 
   async getInfo() {
-    console.log("this get info: ", this);
-
     const url = config.api + "/dayone/country/" + this.countryName;
     await axios.get(url).then((response) => {
-      console.log("data length: ", response.data.length);
 
       this.maxPage = getPages(response.data.length);
 
-      console.log("max page: ", this.maxPage);
-
       this.data = response.data;
-
-      //this.currentData = getInfoByPage(this.state.page, this.data);
 
       this.setState({
         loading: false,
@@ -157,9 +146,6 @@ class CountryInfo extends React.Component {
  
 
   setPage(page) {
-    console.log("set page");
-    console.log("page: ", page);
-    //console.log("max page: ", this.maxPage);
     if(page > 1  && page <= this.maxPage) {
       this.setState(( {
         page

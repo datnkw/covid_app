@@ -13,14 +13,6 @@ function isVisibleRightBlank(page, maxPage) {
 function setValueBtn(page, maxPage){
   const resultArr = [];
 
-  // if(isVisibleLeftBlank(page, maxPage)) {
-  //   resultArr[0] = 0;
-  // }
-
-  // if(isVisibleRightBlank(page, maxPage)) {
-  //   resultArr[4] = 0;
-  // }
-
   if(page < 3) {
     resultArr[0] = 2;
     resultArr[1] = 3;
@@ -52,11 +44,6 @@ function setValueBtn(page, maxPage){
     resultArr[4] = 0;
     resultArr[0] = 0;
   }
-
-  console.log("page: ", page);
-  console.log("valueBtn: ", resultArr);
-  console.log("left: ", isVisibleLeftBlank(page, maxPage));
-  console.log("right: ", isVisibleRightBlank(page, maxPage));
   return resultArr;
 }
 
@@ -106,44 +93,12 @@ class Pagination extends React.Component {
     };
   }
 
-  // componentDidMount(nextProps) {
-  //   console.log("componentWillMoult")
-  //   const {page, maxPage} = nextProps;
-  //   const {valueBtn} = this.state;
-  //   const newValueBth = [...setValueBtn(page, maxPage)];
-
-  //   if(valueBtn != newValueBth) {
-  //     this.setState({
-  //       valueBtn: [...newValueBth]
-  //     })
-  //   }
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   console.log("componentWillUpdate")
-  //   const {page, maxPage} = nextProps;
-  //   const {valueBtn} = this.state;
-  //   const newValueBth = [...setValueBtn(page, maxPage)];
-
-  //   if(valueBtn != newValueBth) {
-  //     this.setState({
-  //       valueBtn: [...newValueBth]
-  //     })
-  //   }
-  // }
-
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate")
     const {page, maxPage} = this.props;
-    console.log('cho dat 2', {page})
     const {valueBtn} = prevState;
     const newValueBth = [...setValueBtn(page, maxPage)];
 
-    console.log("valueBtn: ", valueBtn);
-    console.log("newValueBth: ", newValueBth);
-
     if(!compareArrays(valueBtn, newValueBth)) {
-      console.log("set state componentwillupdate");
       this.setState({
         valueBtn: [...newValueBth]
       })

@@ -14,7 +14,6 @@ class Login extends React.Component {
       email: "",
       password: "",
     };
-
     this.handleChange = this.handleChange.bind(this);
     this.login = this.login.bind(this);
   }
@@ -33,42 +32,25 @@ class Login extends React.Component {
 
     const {email, password} = this.state;
 
-    console.log("email: ", email);
-    console.log("password: ", password);
-
-    console.log("firebase: ", firebase);
-
-    const result = await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       // Handle Errors here.
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage);
       alert("login failed");
       return;
       // ...
     });
 
-    this.context.login(email);
-
+    await firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in.
+        console.log("user auth login: ", user);
+        this.context.login(user.email, user.uid);
+        
     this.props.history.push("/");
+      }
+    });
 
-    // console.log("result: ", result)
-
-    // const thisClassPresent = this;
-    // firebase.auth().onAuthStateChanged(function(user) {
-    //   if (user) {
-    //     // User is signed in.
-    //     console.log("login success:", {user});
-    //     console.log("this usercontext: ",thisClassPresent.context);
-    //     thisClassPresent.context.login(user.email);
-    //     //console.log("email login: ",thisClassPresent.context.user.email);
-    //     // ...
-    //   } else {
-    //     // User is signed out.
-    //     // ...
-    //   }
-    // });
-    // return result;
   }
 
   render() {

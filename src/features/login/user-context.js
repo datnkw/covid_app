@@ -2,17 +2,14 @@ import React from "react";
 
 const authentication = {
   isLogin: false,
-  email: null
+  email: null,
+  id: null
 }
 
-const login = (email) => {
-  authentication.isLogin = true;
-  authentication.email = email;
+const login = (email, id) => {
 }
 
 const logout = () => {
-  authentication.isLogin = false;
-  authentication.email =  null;
 }
 
 export const UserContext = React.createContext({
