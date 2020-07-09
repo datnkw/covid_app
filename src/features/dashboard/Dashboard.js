@@ -1,14 +1,12 @@
 import React from "react";
 import axios from "axios";
 import Loading from "../loading/Loading";
-import InfoByCard from "../InfoByCase/InfoByCase"
+import InfoByCard from "../InfoByCase/InfoByCase";
 import config from "../../config.json";
 import SplashScreen from "../splashScreen/SplashScreen";
 import SideBar from "../sideBar/SideBar";
 import className from "classnames";
-import {
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./Dashboard.module.css";
 import "../../App.css";
 
@@ -28,13 +26,13 @@ class CountryItem extends React.Component {
 
   render() {
     const { Country, TotalConfirmed } = this.props.info;
-    const itemUrl = '/country/' + Country;
+    const itemUrl = "/country/" + Country;
     return (
       <Link to={itemUrl}>
-      <div className={styles.countryItem}>
-        <p>{Country}</p>
-        <p>{TotalConfirmed}</p>
-      </div>
+        <div className={styles.countryItem}>
+          <p>{Country}</p>
+          <p>{TotalConfirmed}</p>
+        </div>
       </Link>
     );
   }
@@ -44,7 +42,9 @@ class CountryItemList extends React.Component {
   render() {
     const { countryItemList } = this.props;
     return countryItemList
-      ? countryItemList.map((item) => <CountryItem key={item.Slug} info={item} />)
+      ? countryItemList.map((item) => (
+          <CountryItem key={item.Slug} info={item} />
+        ))
       : null;
   }
 }
@@ -56,29 +56,35 @@ class Dashboard extends React.Component {
     this.state = {
       loading: true,
     };
-
   }
 
   async getInfo() {
     const url = config.api + "/summary";
+    if(window.navigator.onLine) {
     await axios.get(url).then((response) => {
       this.summaryGlobalInfo = response.data.Global;
       this.summaryCountries = response.data.Countries;
 
-      this.setState({ loading: false });
-
-      this.props.setVisibilitySplashScreen();
+      localStorage.setItem('summaryGlobalInfo', JSON.stringify(this.summaryGlobalInfo));
+      localStorage.setItem('summaryCountries', JSON.stringify(this.summaryCountries));
     });
+  } else {
+    this.summaryGlobalInfo = JSON.parse(localStorage.getItem('summaryGlobalInfo'));
+    this.summaryCountries = JSON.parse(localStorage.getItem('summaryCountries'));
+  }
+
+    this.setState({ loading: false });
+      this.props.setVisibilitySplashScreen();
   }
 
   async componentDidMount() {
     await this.getInfo();
-    this.props.setItemSideBarChoosen('World');
+    this.props.setItemSideBarChoosen("World");
   }
 
   render() {
-    if(!this.props.hasShowOffSplashScreen) {
-      return <SplashScreen />
+    if (!this.props.hasShowOffSplashScreen) {
+      return <SplashScreen />;
     }
 
     if (this.state.loading) {
@@ -87,13 +93,13 @@ class Dashboard extends React.Component {
 
     return (
       <div className="full-width">
-        <SideBar itemSideBarChoosen='World'/>
+        <SideBar itemSideBarChoosen="World" />
         <div className={className(styles.wrapper, "content")}>
-        <InfoByCard cases={this.summaryGlobalInfo}/>
-        <div className={styles.countryItemWrapper}>
-          <CountryItemList countryItemList={this.summaryCountries} />
+          <InfoByCard cases={this.summaryGlobalInfo} />
+          <div className={styles.countryItemWrapper}>
+            <CountryItemList countryItemList={this.summaryCountries} />
+          </div>
         </div>
-      </div>
       </div>
     );
   }
