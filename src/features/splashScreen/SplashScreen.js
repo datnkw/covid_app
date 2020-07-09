@@ -10,14 +10,13 @@ class Loading extends React.Component {
   }
 
   render() {
-      return (
-        <div className={styles.splashWrapper}>
-          <div className={styles.logo}></div>
-          <p>Get the latest information about Covid 19</p>
-        </div>
-      );
-    }
-  
+    return (
+      <div className={styles.splashWrapper}>
+        <div className={styles.logo}></div>
+        <p>Get the latest information about Covid 19</p>
+      </div>
+    );
+  }
 }
 
 export default Loading;

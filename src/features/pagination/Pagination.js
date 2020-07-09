@@ -1,19 +1,19 @@
 import React from "react";
-import classNames from "classnames"
+import classNames from "classnames";
 import styles from "./Pagination.module.css";
 
 function isVisibleLeftBlank(page, maxPage) {
-  return page > 3
+  return page > 3;
 }
 
 function isVisibleRightBlank(page, maxPage) {
-  return page < maxPage - 2
+  return page < maxPage - 2;
 }
 
-function setValueBtn(page, maxPage){
+function setValueBtn(page, maxPage) {
   const resultArr = [];
 
-  if(page < 3) {
+  if (page < 3) {
     resultArr[0] = 2;
     resultArr[1] = 3;
     resultArr[2] = 0;
@@ -54,101 +54,88 @@ function compareArrays(arr, secondArr) {
 class BlankBtn extends React.Component {
   render() {
     return (
-      <div 
-          className={classNames(styles.blankBtn, 
-            styles.btnPagination,
-            this.props.isVisible ? '' : styles.hiddenBtn
-            )}
-        > ...</div>
-    )
+      <div
+        className={classNames(
+          styles.blankBtn,
+          styles.btnPagination,
+          this.props.isVisible ? "" : styles.hiddenBtn
+        )}
+      >
+        {" "}
+        ...
+      </div>
+    );
   }
 }
 
 class NumberBtn extends React.Component {
   render() {
-    const {page, setPage} = this.props;
+    const { page, setPage } = this.props;
 
     return (
       <div
-        className={
-          classNames(styles.btnPagination,
-          page ? '' : styles.hiddenBtn
+        className={classNames(
+          styles.btnPagination,
+          page ? "" : styles.hiddenBtn
         )}
         onClick={() => setPage(page)}
-        >
-          {page}
+      >
+        {page}
       </div>
-    )
+    );
   }
 }
 
 class Pagination extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
       isVisibleLeft: false,
       isVisibleRight: false,
-      valueBtn: [0, 0, 0, 0, 0]
+      valueBtn: [0, 0, 0, 0, 0],
     };
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {page, maxPage} = this.props;
-    const {valueBtn} = prevState;
+    const { page, maxPage } = this.props;
+    const { valueBtn } = prevState;
     const newValueBth = [...setValueBtn(page, maxPage)];
 
-    if(!compareArrays(valueBtn, newValueBth)) {
+    if (!compareArrays(valueBtn, newValueBth)) {
       this.setState({
-        valueBtn: [...newValueBth]
-      })
+        valueBtn: [...newValueBth],
+      });
     }
   }
 
   render() {
-    const {page, maxPage, setPage} = this.props;
+    const { page, maxPage, setPage } = this.props;
     const valueBtn = this.state.valueBtn;
     //valueBtn = [...setValueBtn(page, maxPage)];
     return (
       <div className={styles.wrapper}>
-        <div 
+        <div
           className={classNames(styles.preBtn, styles.btnPagination)}
           onClick={() => setPage(page - 1)}
-        > </div>{" "}
-        <NumberBtn 
-          page={1}
-          setPage={setPage}
-          />
-        <NumberBtn
-          page={valueBtn[0]}
-          setPage={setPage}
-        />
-        <BlankBtn isVisible={isVisibleLeftBlank(page, maxPage)}/>
-        <NumberBtn 
-          page={valueBtn[1]}
-          setPage={setPage}
-        />
-        <NumberBtn 
-          page={valueBtn[2]}
-          setPage={setPage}
-        />
-        <NumberBtn 
-          page={valueBtn[3]}
-          setPage={setPage}
-        />
-        <BlankBtn isVisible={isVisibleRightBlank(page, maxPage)}/>
-        <NumberBtn 
-          page={valueBtn[4]}
-          setPage={setPage}
-        />
-        <NumberBtn 
-          page={maxPage}
-          setPage={setPage}
-          />
-        <div 
+        >
+          {" "}
+        </div>{" "}
+        <NumberBtn page={1} setPage={setPage} />
+        <NumberBtn page={valueBtn[0]} setPage={setPage} />
+        <BlankBtn isVisible={isVisibleLeftBlank(page, maxPage)} />
+        <NumberBtn page={valueBtn[1]} setPage={setPage} />
+        <NumberBtn page={valueBtn[2]} setPage={setPage} />
+        <NumberBtn page={valueBtn[3]} setPage={setPage} />
+        <BlankBtn isVisible={isVisibleRightBlank(page, maxPage)} />
+        <NumberBtn page={valueBtn[4]} setPage={setPage} />
+        <NumberBtn page={maxPage} setPage={setPage} />
+        <div
           className={classNames(styles.nextBtn, styles.btnPagination)}
           onClick={() => this.props.setPage(this.props.page + 1)}
-        > </div>{" "}
+        >
+          {" "}
+        </div>{" "}
       </div>
     );
   }

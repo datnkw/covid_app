@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-import styles from "./HandleOffline.module.css";
+import styles from "./NotiOffline.module.css";
 
-class HandleOffline extends React.Component {
+class NotiOffline extends React.Component {
   constructor(props) {
     super(props);
 
@@ -22,25 +22,31 @@ class HandleOffline extends React.Component {
   }
 
   checkConnect() {
-    const {isDisconnect} = this.state;
+    const { isDisconnect } = this.state;
     const isOnline = window.navigator.onLine;
     if (!isOnline && !isDisconnect) {
       this.setState({
         isDisconnect: true,
       });
-    }else if (isOnline && isDisconnect){
+    } else if (isOnline && isDisconnect) {
       this.setState({
-        isDisconnect: false
+        isDisconnect: false,
       });
     }
   }
 
   render() {
-    return <div className={
-       classNames(styles.warning, this.state.isDisconnect ? styles.disconnect : null)}
-       >Internet connection lost</div>;
+    return (
+      <div
+        className={classNames(
+          styles.warning,
+          this.state.isDisconnect ? styles.disconnect : null
+        )}
+      >
+        Internet connection lost
+      </div>
+    );
   }
-  
 }
 
-export default HandleOffline;
+export default NotiOffline;

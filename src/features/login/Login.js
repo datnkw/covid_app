@@ -3,7 +3,7 @@ import styles from "./Login.module.css";
 import styleSplashScreen from "../splashScreen/SplashScreen.module.css";
 import className from "classnames";
 import firebase from "../profile/firebase";
-import {UserContext} from './user-context';
+import { UserContext } from "./user-context";
 import { withRouter } from "react-router-dom";
 
 class Login extends React.Component {
@@ -17,40 +17,45 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.login = this.login.bind(this);
   }
-  
+
   static contextType = UserContext;
 
   handleChange(event) {
     const target = event.target;
     this.setState({
-      [target.name]: target.value
+      [target.name]: target.value,
     });
   }
 
   async login(event) {
     event.preventDefault();
 
-    const {email, password} = this.state;
+    const { email, password } = this.state;
 
-    await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert("login failed");
-      return;
-      // ...
-    });
+    if(!window.navigator.onLine) {
+      alert("Disconnect internet");
+        return;
+    }
+
+    await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        // Handle Errors here.
+        alert("login failed");
+        return;
+        // ...
+      });
 
     await firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
         console.log("user auth login: ", user);
         this.context.login(user.email, user.uid);
-        
-    this.props.history.push("/");
+
+        this.props.history.push("/");
       }
     });
-
   }
 
   render() {

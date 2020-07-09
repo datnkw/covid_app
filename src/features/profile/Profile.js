@@ -76,24 +76,30 @@ class Profile extends React.Component {
     });
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log("this.context.authentication.id: ", this.context);
 
     if (!this.context.authentication.isLogin) {
       this.props.history.push("/login");
       return;
     }
-    this.db
+
+    if(window.navigator.onLine) {
+    await this.db
       .collection("profiles")
       .doc(this.context.authentication.id)
       .get()
       .then((querySnapshot) => {
         this.setStateInfo(querySnapshot.data());
-        this.setState({
-          loading: false,
-        });
+        localStorage.setItem('data', JSON.stringify(querySnapshot.data()));
       });
-    
+    } else {
+      this.setStateInfo(JSON.parse(localStorage.getItem('data')))
+    }
+
+    this.setState({
+      loading: false,
+    });
     this.props.setVisibilitySplashScreen();
   }
 

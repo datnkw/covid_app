@@ -38,3 +38,21 @@
 
   cursor: pointer;
 }
+
+@media only screen and (min-width: 550px){
+  .wrapper {
+    flex-direction: column;
+  }
+}
+@media only screen and (min-width: 768px){
+
+}
+@media only screen and (min-width: 1024px){
+
+}
+@media only screen and (min-width: 1128px){
+
+}
+@media only screen and (min-width: 1920px){
+
+}

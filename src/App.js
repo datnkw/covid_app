@@ -4,7 +4,7 @@ import CountryInfo from "./features/countryItem/CountryInfo";
 import Profile from "./features/profile/Profile";
 import Login from "./features/login/Login";
 import { UserContext } from "./features/login/user-context";
-import HandleOffline from "./features/handleOffline/HandleOffline";
+import NotiOffline from "./features/notiOffline/NotiOffline";
 import firebase from "./features/profile/firebase";
 import "./App.css";
 
@@ -48,7 +48,6 @@ class App extends React.Component {
     await firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
-        console.log("this user in checklogin: ", user.email);
         this.context.login(user.email, user.uid);
         
         this.setState({
@@ -79,10 +78,6 @@ class App extends React.Component {
   }
 
   login = (email, id) => {
-    console.log("login in app: ");
-
-    const {authentication} = this.state;
-
     this.setState({
       authentication: {
         isLogin: true, 
@@ -90,9 +85,6 @@ class App extends React.Component {
         id
       }
     })
-    
-
-    console.log("this.state.authentication afther login: ", this.state.authentication);
   }
 
   logout = async () => {
@@ -119,7 +111,7 @@ class App extends React.Component {
       >
         <div className="App">
           <Router>
-            <HandleOffline />
+            <NotiOffline />
             <Switch>
               <Route exact path="/">
                 <CountryInfo
