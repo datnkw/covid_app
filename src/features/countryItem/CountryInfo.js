@@ -127,9 +127,9 @@ class CountryInfo extends React.Component {
       : props.name;
 
     this.setPage = this.setPage.bind(this);
-    console.log("this page: ", queryString.parse(props.location.search));
+    
     const currentPage = props.location.search ? queryString.parse(props.location.search).page : 1;
-    console.log("currentPage: ", currentPage);
+    
     this.state = {
       loading: true,
       page: currentPage
@@ -161,7 +161,7 @@ class CountryInfo extends React.Component {
   }
 
   setPage(page) {
-    if (page > 1 && page <= this.maxPage) {
+    if (page > 0 && page <= this.maxPage) {
       this.props.history.push('/country/' + this.countryName + '?page=' + page);
       this.setState({
         page,
