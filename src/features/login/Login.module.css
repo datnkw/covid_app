@@ -7,6 +7,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  flex-direction: column;
 }
 
 .inputWrapper p{
@@ -18,7 +20,7 @@
 .inputWrapper input {
   margin-top: 10px;
   height: 50px;
-  width: 400px;
+  width: 300px;
 }
 
 .logo {
@@ -37,6 +39,8 @@
   text-align: center;
 
   cursor: pointer;
+
+  margin: 40px auto;
 }
 
 @media only screen and (min-width: 550px){
@@ -54,5 +58,7 @@
 
 }
 @media only screen and (min-width: 1920px){
-
+  .wrapper {
+    flex-direction: row;
+  }
 }
