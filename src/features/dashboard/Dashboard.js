@@ -60,21 +60,31 @@ class Dashboard extends React.Component {
 
   async getInfo() {
     const url = config.api + "/summary";
-    if(window.navigator.onLine) {
-    await axios.get(url).then((response) => {
-      this.summaryGlobalInfo = response.data.Global;
-      this.summaryCountries = response.data.Countries;
+    if (window.navigator.onLine) {
+      await axios.get(url).then((response) => {
+        this.summaryGlobalInfo = response.data.Global;
+        this.summaryCountries = response.data.Countries;
 
-      localStorage.setItem('summaryGlobalInfo', JSON.stringify(this.summaryGlobalInfo));
-      localStorage.setItem('summaryCountries', JSON.stringify(this.summaryCountries));
-    });
-  } else {
-    this.summaryGlobalInfo = JSON.parse(localStorage.getItem('summaryGlobalInfo'));
-    this.summaryCountries = JSON.parse(localStorage.getItem('summaryCountries'));
-  }
+        localStorage.setItem(
+          "summaryGlobalInfo",
+          JSON.stringify(this.summaryGlobalInfo)
+        );
+        localStorage.setItem(
+          "summaryCountries",
+          JSON.stringify(this.summaryCountries)
+        );
+      });
+    } else {
+      this.summaryGlobalInfo = JSON.parse(
+        localStorage.getItem("summaryGlobalInfo")
+      );
+      this.summaryCountries = JSON.parse(
+        localStorage.getItem("summaryCountries")
+      );
+    }
 
     this.setState({ loading: false });
-      this.props.setVisibilitySplashScreen();
+    this.props.setVisibilitySplashScreen();
   }
 
   async componentDidMount() {

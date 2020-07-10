@@ -5,6 +5,7 @@ import styles from "./SideBar.module.css";
 import { UserContext } from "../login/user-context";
 import { withRouter } from "react-router-dom";
 import firebase from "../profile/firebase";
+import className from "classnames";
 import "../../App.css";
 
 class SideBarItem extends React.Component {
@@ -82,6 +83,7 @@ class SideBar extends React.Component {
 
     this.state = {
       authentication: {},
+      isHiddenSideBar: true
     };
   }
 
@@ -95,6 +97,14 @@ class SideBar extends React.Component {
   goToLogin = () => {
     this.props.history.push("/login");
   };
+
+  switchSideBar = () => {
+    console.log("switch sidebar");
+    this.setState({
+      isHiddenSideBar: !this.state.isHiddenSideBar
+    })
+    
+  }
 
   render() {
     const itemSideBarInfoList = [
@@ -113,7 +123,10 @@ class SideBar extends React.Component {
     ];
 
     return (
-      <div className={styles["wrapper-side-bar"]}>
+      <div className={className(
+        styles["wrapper-side-bar"],
+        this.state.isHiddenSideBar ? styles.hiddenSidebar : ''
+      )}>
         <div className={styles["logo-wrapper"]}>
           <div className={styles["logo"]}> </div> <p> Covid - 19 app </p>{" "}
         </div>
@@ -123,6 +136,12 @@ class SideBar extends React.Component {
         />
 
         <AuthBtn goToLogin={this.goToLogin} doTheLogout={this.doTheLogout}/>
+
+        <button className={styles["btn-menu"]} onClick={this.switchSideBar}>
+          <div className={styles["menu-btn"]}></div>
+          <div className={styles["menu-btn"]}></div>
+          <div className={styles["menu-btn"]}></div>
+        </button>
       </div>
     );
   }

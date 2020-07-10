@@ -14,7 +14,6 @@
   background-color: #6b8e23;
   color: #fff;
 
-  /* padding: 30px; */
   width: 80px;
   height: 80px;
 
@@ -39,20 +38,31 @@
   cursor: default !important;
 }
 
-.preBtn {
-
-}
-
 .preBtn:after{
   content: '\003c';
   position: absolute;
 }
 
-.nextBtn {
-
-}
-
 .nextBtn:after{
   content: "\003e";
   position: absolute;
+}
+
+.numberPagination {
+  display: none;
+}
+
+@media only screen and (min-width: 550px){
+}
+@media only screen and (min-width: 768px){
+}
+@media only screen and (min-width: 1024px){
+  
+}
+@media only screen and (min-width: 1128px){
+  .numberPagination {
+    display: flex;
+  }
+}
+@media only screen and (min-width: 1920px){
 }
