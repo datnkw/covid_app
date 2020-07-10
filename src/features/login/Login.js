@@ -87,5 +87,5 @@ class Login extends React.Component {
     );
   }
 }
-//Login.contextType = UserContext;
+
 export default withRouter(Login);

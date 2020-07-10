@@ -1,7 +1,6 @@
 .wrapper {
   background-color: #fff;
   width: 100%;
-  /* margin-left: 200px; */
 }
 
 .globalInfoContainer {
@@ -10,11 +9,11 @@
 }
 
 .countryItem {
-  padding: 10px;
-  margin: 20px;
+  padding: 6px;
+  margin: 10px;
 
-  width: 200px;
-  height: 150px;
+  width: 160px;
+  height: 130px;
 
   text-align: center;
 
@@ -35,9 +34,7 @@
 }
 
 @media only screen and (min-width: 550px){
-  .wrapper {
-    flex-direction: column;
-  }
+  
 }
 @media only screen and (min-width: 768px){
 
@@ -49,5 +46,38 @@
 
 }
 @media only screen and (min-width: 1920px){
-
+  .wrapper {
+    background-color: #fff;
+    width: 100%;
+  }
+  
+  .globalInfoContainer {
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .countryItem {
+    padding: 10px;
+    margin: 20px;
+  
+    width: 200px;
+    height: 150px;
+  
+    text-align: center;
+  
+    background-color: #cfd0d2;
+  }
+  
+  .countryItem p {
+    margin: 30px;
+  }
+  
+  .countryItem p:nth-child(1) {
+    font-weight: bold;
+  }
+  
+  .countryItemWrapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }

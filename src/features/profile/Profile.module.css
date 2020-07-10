@@ -26,7 +26,7 @@
 .itemInput input {
   font-size: 20px;
   box-shadow: none;
-  width: 500px;
+  width: 80%;
   padding: 10px;
 }
 
@@ -36,4 +36,18 @@
   margin-left: auto;
 
   cursor: pointer;
+}
+
+@media only screen and (min-width: 550px){
+}
+@media only screen and (min-width: 768px){
+}
+@media only screen and (min-width: 1024px){
+}
+@media only screen and (min-width: 1128px){
+}
+@media only screen and (min-width: 1920px){
+  .itemInput input {
+    width: 500px;
+  }
 }
