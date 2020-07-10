@@ -14,35 +14,15 @@ function setValueBtn(page, maxPage) {
   const resultArr = [];
 
   if (page < 3) {
-    resultArr[0] = 2;
-    resultArr[1] = 3;
-    resultArr[2] = 0;
-    resultArr[3] = 0;
-    resultArr[4] = maxPage - 1;
+    resultArr = [2, 3, 0, 0, maxPage - 1];
   } else if (page === 3) {
-    resultArr[0] = 2;
-    resultArr[1] = 3;
-    resultArr[2] = 4;
-    resultArr[3] = 0;
-    resultArr[4] = 0;
+    resultArr = [2, 3, 4, 0, 0];
   } else if (page === maxPage - 2) {
-    resultArr[0] = 0;
-    resultArr[1] = 0;
-    resultArr[2] = maxPage - 3;
-    resultArr[3] = maxPage - 2;
-    resultArr[4] = maxPage - 1;
+    resultArr = [0, 0, maxPage - 3, maxPage - 2, maxPage - 1];
   } else if (page > maxPage - 2) {
-    resultArr[0] = 2;
-    resultArr[1] = 0;
-    resultArr[2] = 0;
-    resultArr[3] = maxPage - 2;
-    resultArr[4] = maxPage - 1;
+    resultArr = [2, 0, 0, maxPage - 2, maxPage - 1];
   } else {
-    resultArr[2] = page;
-    resultArr[1] = page - 1;
-    resultArr[3] = page + 1;
-    resultArr[4] = 0;
-    resultArr[0] = 0;
+    resultArr = [0, page -1, page, page + 1, 0];
   }
   return resultArr;
 }
@@ -112,7 +92,7 @@ class Pagination extends React.Component {
   render() {
     const { page, maxPage, setPage } = this.props;
     const valueBtn = this.state.valueBtn;
-    //valueBtn = [...setValueBtn(page, maxPage)];
+    
     return (
       <div className={styles.wrapper}>
         <div
@@ -122,15 +102,15 @@ class Pagination extends React.Component {
           {" "}
         </div>{" "}
         <div className={styles.numberPagination}>
-        <NumberBtn page={1} setPage={setPage} />
-        <NumberBtn page={valueBtn[0]} setPage={setPage} />
-        <BlankBtn isVisible={isVisibleLeftBlank(page, maxPage)} />
-        <NumberBtn page={valueBtn[1]} setPage={setPage} />
-        <NumberBtn page={valueBtn[2]} setPage={setPage} />
-        <NumberBtn page={valueBtn[3]} setPage={setPage} />
-        <BlankBtn isVisible={isVisibleRightBlank(page, maxPage)} />
-        <NumberBtn page={valueBtn[4]} setPage={setPage} />
-        <NumberBtn page={maxPage} setPage={setPage} />
+          <NumberBtn page={1} setPage={setPage} />
+          <NumberBtn page={valueBtn[0]} setPage={setPage} />
+          <BlankBtn isVisible={isVisibleLeftBlank(page, maxPage)} />
+          <NumberBtn page={valueBtn[1]} setPage={setPage} />
+          <NumberBtn page={valueBtn[2]} setPage={setPage} />
+          <NumberBtn page={valueBtn[3]} setPage={setPage} />
+          <BlankBtn isVisible={isVisibleRightBlank(page, maxPage)} />
+          <NumberBtn page={valueBtn[4]} setPage={setPage} />
+          <NumberBtn page={maxPage} setPage={setPage} />
         </div>
         <div
           className={classNames(styles.nextBtn, styles.btnPagination)}
