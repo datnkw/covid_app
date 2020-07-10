@@ -11,18 +11,18 @@ function isVisibleRightBlank(page, maxPage) {
 }
 
 function setValueBtn(page, maxPage) {
-  const resultArr = [];
+  let resultArr = [];
 
   if (page < 3) {
-    resultArr = [2, 3, 0, 0, maxPage - 1];
+    resultArr = [2, 3, 0, 0, +maxPage - 1];
   } else if (page === 3) {
     resultArr = [2, 3, 4, 0, 0];
-  } else if (page === maxPage - 2) {
-    resultArr = [0, 0, maxPage - 3, maxPage - 2, maxPage - 1];
-  } else if (page > maxPage - 2) {
-    resultArr = [2, 0, 0, maxPage - 2, maxPage - 1];
+  } else if (page === +maxPage - 2) {
+    resultArr = [0, 0, +maxPage - 3, +maxPage - 2, +maxPage - 1];
+  } else if (page > +maxPage - 2) {
+    resultArr = [2, 0, 0, +maxPage - 2, +maxPage - 1];
   } else {
-    resultArr = [0, page -1, page, page + 1, 0];
+    resultArr = [0, +page -1, +page, +page + 1, 0];
   }
   return resultArr;
 }
