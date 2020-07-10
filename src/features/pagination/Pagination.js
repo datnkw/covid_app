@@ -121,6 +121,7 @@ class Pagination extends React.Component {
         >
           {" "}
         </div>{" "}
+        <div className={styles.numberPagination}>
         <NumberBtn page={1} setPage={setPage} />
         <NumberBtn page={valueBtn[0]} setPage={setPage} />
         <BlankBtn isVisible={isVisibleLeftBlank(page, maxPage)} />
@@ -130,6 +131,7 @@ class Pagination extends React.Component {
         <BlankBtn isVisible={isVisibleRightBlank(page, maxPage)} />
         <NumberBtn page={valueBtn[4]} setPage={setPage} />
         <NumberBtn page={maxPage} setPage={setPage} />
+        </div>
         <div
           className={classNames(styles.nextBtn, styles.btnPagination)}
           onClick={() => this.props.setPage(this.props.page + 1)}
