@@ -128,6 +128,13 @@ class App extends React.Component {
                   setItemSideBarChoosen={this.setItemSideBarChoosen}
                 />{" "}
               </Route>{" "}
+              <Route path="/country/:name?page=">
+                <RenderCountryInfo
+                  hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
+                  setVisibilitySplashScreen={this.setVisibilitySplashScreen}
+                  setItemSideBarChoosen={this.setItemSideBarChoosen}
+                />{" "}
+              </Route>{" "}
               <Route path="/world">
                 <Dashboard
                   hasShowOffSplashScreen={this.state.hasShowOffSplashScreen}
