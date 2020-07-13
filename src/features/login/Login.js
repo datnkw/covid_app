@@ -50,7 +50,6 @@ class Login extends React.Component {
     await firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         // User is signed in.
-        console.log("user auth login: ", user);
         this.context.login(user.email, user.uid);
 
         this.props.history.push("/");
