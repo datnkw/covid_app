@@ -1,5 +1,5 @@
 .wrapper {
-  padding-left: 40px;
+  text-align: center;
 }
 
 .header {
@@ -16,17 +16,20 @@
 .itemInput {
   display: block;
   padding: 20px;
-  padding-left: 0px;
+
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .itemInput p {
   margin-bottom: 10px;
+  text-align: left;
 }
 
 .itemInput input {
   font-size: 20px;
   box-shadow: none;
-  width: 80%;
+  width: 100%;
   padding: 10px;
 }
 

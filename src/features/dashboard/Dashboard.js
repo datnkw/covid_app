@@ -8,12 +8,14 @@ import SideBar from "../sideBar/SideBar";
 import className from "classnames";
 import { Link } from "react-router-dom";
 import styles from "./Dashboard.module.css";
-import queryString from "query-string";
-import {withRouter} from "react-router-dom";
+
+
 import "../../App.css";
 import Pagination from "../pagination/Pagination";
+import HocPagination from "../hocPagination/HocPagination";
 
 const ITEM_PER_PAGE = 15;
+const DEFAULT_URL = '/world';
 
 class CountryItem extends React.Component {
   // {
@@ -54,43 +56,17 @@ class CountryItemList extends React.Component {
   }
 }
 
-function getInfoByPage(page, data) {
-  const positionFirstItem = data.length - page * ITEM_PER_PAGE;
-
-  if (positionFirstItem >= 0) {
-    return data.slice(positionFirstItem, positionFirstItem + ITEM_PER_PAGE);
-  } else {
-    return data.slice(0, ITEM_PER_PAGE + positionFirstItem);
-  }
-}
-
-function getPages(amountItem) {
-  return (
-    Math.floor(amountItem / ITEM_PER_PAGE) +
-    (amountItem % ITEM_PER_PAGE === 0 ? 0 : 1)
-  );
-}
-
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    this.setPage = this.setPage.bind(this);
-    const currentPage = props.location.search ? queryString.parse(props.location.search).page : 1;
-    console.log("currentPage: ", currentPage);
+    //this.setPage = this.setPage.bind(this);
+    //const currentPage = props.location.search ? queryString.parse(props.location.search).page : 1;
+    console.log("props.location: ", props.location);
     this.state = {
       loading: true,
-      page: currentPage
+      //page: currentPage
     };
-  }
-
-  setPage(page) {
-    if (page > 0 && page <= this.maxPage) {
-      this.props.history.push('/world/' + '?page=' + page);
-      this.setState({
-        page,
-      });
-    }
   }
 
   async getInfo() {
@@ -100,7 +76,9 @@ class Dashboard extends React.Component {
         this.summaryGlobalInfo = response.data.Global;
         this.summaryCountries = response.data.Countries;
 
-        this.maxPage = getPages(response.data.Countries.length);
+        //this.maxPage = this.props.getPages(response.data.Countries.length);
+        console.log("data countries: ", response.data.Countries);
+        this.props.setData(response.data.Countries);
 
         localStorage.setItem(
           "summaryGlobalInfo",
@@ -110,7 +88,7 @@ class Dashboard extends React.Component {
           "summaryCountries",
           JSON.stringify(this.summaryCountries)
         );
-        localStorage.setItem('maxPage', this.maxPage);
+        //localStorage.setItem('maxPage', this.maxPage);
       });
     } else {
       this.summaryGlobalInfo = JSON.parse(
@@ -119,7 +97,7 @@ class Dashboard extends React.Component {
       this.summaryCountries = JSON.parse(
         localStorage.getItem("summaryCountries")
       );
-      this.maxPage = localStorage.getItem('maxPage');
+      //this.maxPage = localStorage.getItem('maxPage');
     }
 
     this.setState({ loading: false });
@@ -140,19 +118,19 @@ class Dashboard extends React.Component {
       return <Loading />;
     }
     console.log("this page: ", this.state.page);
-    console.log("this info page: ", getInfoByPage(this.state.page, this.summaryCountries));
+    console.log("this info page: ", this.props.dataCurrentPage);
     return (
       <div className="full-width">
         <SideBar itemSideBarChoosen="World" />
         <div className={className(styles.wrapper, "content")}>
         <InfoByCard cases={this.summaryGlobalInfo} />
           <div className={styles.countryItemWrapper}>
-            <CountryItemList countryItemList={getInfoByPage(this.state.page, this.summaryCountries)} />
+            <CountryItemList countryItemList={this.props.dataCurrentPage} />
           </div>
           <Pagination
-            setPage={this.setPage}
-            page={this.state.page}
-            maxPage={this.maxPage}
+            setPage={this.props.setPage}
+            page={this.props.page}
+            maxPage={this.props.maxPage}
           />
         </div>
       </div>
@@ -160,4 +138,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default withRouter(Dashboard);
+export default HocPagination(Dashboard, ITEM_PER_PAGE, DEFAULT_URL);
