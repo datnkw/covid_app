@@ -1,7 +1,7 @@
 .splashWrapper{
   position: absolute;
 
-  width: 100%;
+  width: 100vw;
   height: 100vh;
 
   display: flex;
@@ -10,8 +10,6 @@
   flex-direction: column;
 
   background-color: #fff;
-
-  margin-left: -200px;
 }
 
 .splashWrapper p {

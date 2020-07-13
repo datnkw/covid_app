@@ -7,7 +7,9 @@ import SplashScreen from "../splashScreen/SplashScreen";
 import Pagination from "../pagination/Pagination";
 import SideBar from "../sideBar/SideBar";
 import className from "classnames";
+import { withRouter } from "react-router-dom";
 import styles from "./CountryInfo.module.css";
+import queryString from 'query-string';
 import "../../App.css";
 
 const ITEM_PER_PAGE = 5;
@@ -120,15 +122,17 @@ class CountryInfo extends React.Component {
   constructor(props) {
     super(props);
 
-    this.countryName = this.props.match
-      ? this.props.match.params.name
+    this.countryName = !props.name
+      ? props.match.params.name
       : props.name;
 
     this.setPage = this.setPage.bind(this);
-
+    
+    const currentPage = props.location.search ? queryString.parse(props.location.search).page : 1;
+    
     this.state = {
       loading: true,
-      page: 1,
+      page: currentPage
     };
   }
 
@@ -157,7 +161,8 @@ class CountryInfo extends React.Component {
   }
 
   setPage(page) {
-    if (page > 1 && page <= this.maxPage) {
+    if (page > 0 && page <= this.maxPage) {
+      this.props.history.push('/country/' + this.countryName + '?page=' + page);
       this.setState({
         page,
       });
@@ -205,4 +210,4 @@ class CountryInfo extends React.Component {
   }
 }
 
-export default CountryInfo;
+export default withRouter(CountryInfo);

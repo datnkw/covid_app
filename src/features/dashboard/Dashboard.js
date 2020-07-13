@@ -8,7 +8,14 @@ import SideBar from "../sideBar/SideBar";
 import className from "classnames";
 import { Link } from "react-router-dom";
 import styles from "./Dashboard.module.css";
+
+
 import "../../App.css";
+import Pagination from "../pagination/Pagination";
+import HocPagination from "../hocPagination/HocPagination";
+
+const ITEM_PER_PAGE = 15;
+const DEFAULT_URL = '/world';
 
 class CountryItem extends React.Component {
   // {
@@ -53,8 +60,12 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
+    //this.setPage = this.setPage.bind(this);
+    //const currentPage = props.location.search ? queryString.parse(props.location.search).page : 1;
+    console.log("props.location: ", props.location);
     this.state = {
       loading: true,
+      //page: currentPage
     };
   }
 
@@ -65,6 +76,10 @@ class Dashboard extends React.Component {
         this.summaryGlobalInfo = response.data.Global;
         this.summaryCountries = response.data.Countries;
 
+        //this.maxPage = this.props.getPages(response.data.Countries.length);
+        console.log("data countries: ", response.data.Countries);
+        this.props.setData(response.data.Countries);
+
         localStorage.setItem(
           "summaryGlobalInfo",
           JSON.stringify(this.summaryGlobalInfo)
@@ -73,6 +88,7 @@ class Dashboard extends React.Component {
           "summaryCountries",
           JSON.stringify(this.summaryCountries)
         );
+        //localStorage.setItem('maxPage', this.maxPage);
       });
     } else {
       this.summaryGlobalInfo = JSON.parse(
@@ -81,6 +97,7 @@ class Dashboard extends React.Component {
       this.summaryCountries = JSON.parse(
         localStorage.getItem("summaryCountries")
       );
+      //this.maxPage = localStorage.getItem('maxPage');
     }
 
     this.setState({ loading: false });
@@ -100,19 +117,25 @@ class Dashboard extends React.Component {
     if (this.state.loading) {
       return <Loading />;
     }
-
+    console.log("this page: ", this.state.page);
+    console.log("this info page: ", this.props.dataCurrentPage);
     return (
       <div className="full-width">
         <SideBar itemSideBarChoosen="World" />
         <div className={className(styles.wrapper, "content")}>
-          <InfoByCard cases={this.summaryGlobalInfo} />
+        <InfoByCard cases={this.summaryGlobalInfo} />
           <div className={styles.countryItemWrapper}>
-            <CountryItemList countryItemList={this.summaryCountries} />
+            <CountryItemList countryItemList={this.props.dataCurrentPage} />
           </div>
+          <Pagination
+            setPage={this.props.setPage}
+            page={this.props.page}
+            maxPage={this.props.maxPage}
+          />
         </div>
       </div>
     );
   }
 }
 
-export default Dashboard;
+export default HocPagination(Dashboard, ITEM_PER_PAGE, DEFAULT_URL);
