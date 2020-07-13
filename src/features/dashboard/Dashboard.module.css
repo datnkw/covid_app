@@ -1,6 +1,6 @@
 .wrapper {
   background-color: #fff;
-  width: 100%;
+  width: 100vw;
 }
 
 .globalInfoContainer {
@@ -31,6 +31,8 @@
 .countryItemWrapper {
   display: flex;
   flex-wrap: wrap;
+
+  justify-content: start;
 }
 
 @media only screen and (min-width: 550px){
@@ -46,38 +48,11 @@
 
 }
 @media only screen and (min-width: 1920px){
-  .wrapper {
-    background-color: #fff;
-    width: 100%;
-  }
-  
-  .globalInfoContainer {
-    padding: 20px;
-    background-color: #fff;
-  }
-  
   .countryItem {
     padding: 10px;
     margin: 20px;
   
     width: 200px;
     height: 150px;
-  
-    text-align: center;
-  
-    background-color: #cfd0d2;
-  }
-  
-  .countryItem p {
-    margin: 30px;
-  }
-  
-  .countryItem p:nth-child(1) {
-    font-weight: bold;
-  }
-  
-  .countryItemWrapper {
-    display: flex;
-    flex-wrap: wrap;
   }
 }
