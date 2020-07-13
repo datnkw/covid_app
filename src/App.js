@@ -57,10 +57,6 @@ class App extends React.Component {
     });
   };
 
-  componentDidUpdate() {
-    console.log("didupdate app:",this.state.authentication);
-  }
-
   setVisibilitySplashScreen() {
     this.setState({
       hasShowOffSplashScreen: true,
@@ -100,7 +96,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("this.state.authentication: ", this.state.authentication);
     return (
       <UserContext.Provider
         value={{

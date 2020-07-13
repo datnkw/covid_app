@@ -70,15 +70,12 @@ class Profile extends React.Component {
   }
 
   setStateInfo(state) {
-    console.log("state info: ", state);
     this.setState({
       ...state,
     });
   }
 
   async componentDidMount() {
-    console.log("this.context.authentication.id: ", this.context);
-
     if (!this.context.authentication.isLogin) {
       this.props.history.push("/login");
       return;

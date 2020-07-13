@@ -1,5 +1,4 @@
 import React from "react";
-import Pagination from "../pagination/Pagination";
 import queryString from "query-string";
 import {withRouter} from "react-router-dom";
 
@@ -7,9 +6,7 @@ function HocPagination(WrappedComponent, itemPerPage, defaultURL) {
   return withRouter(class extends React.Component {
     constructor(props) {
       super(props);
-      console.log("props.location: ", props.location);
       const currentPage = props.location.search ? queryString.parse(props.location.search).page : 1;
-      console.log("this current page: ", currentPage);
       this.state = {
         page: currentPage,
         maxPage: 0,
@@ -20,9 +17,6 @@ function HocPagination(WrappedComponent, itemPerPage, defaultURL) {
 
     getInfoByPage = (page, data) => {
       const positionFirstItem = data.length - page * itemPerPage;
-
-      console.log("data in get info: ", data);
-      console.log("numpage: ", page);
 
       if (positionFirstItem >= 0) {
         return data.slice(positionFirstItem, positionFirstItem + itemPerPage);
@@ -37,13 +31,9 @@ function HocPagination(WrappedComponent, itemPerPage, defaultURL) {
         maxPage: this.getMaxPage(data.length)
       })
 
-      console.log("this data: ", this.state.data);
-
       this.setState({
         dataCurrentPage: this.getInfoByPage(this.state.page, this.state.data)
       })
-
-      console.log("this current data: ", this.state.dataCurrentPage);
     };
 
     getMaxPage = (amountItem) => {
@@ -52,14 +42,11 @@ function HocPagination(WrappedComponent, itemPerPage, defaultURL) {
     };
 
     setPage = (page) => {
-      console.log("this page:", page);
       if (page > 0 && page <= this.state.maxPage) {
-        //console.log("compare two data: ", this.compareArrays(dataCurrentPage, newdataCurrentPage))
         this.props.history.push(defaultURL + '?page=' + page);
         this.setState({
           page
         });
-        
       }
     }
 
@@ -68,9 +55,8 @@ function HocPagination(WrappedComponent, itemPerPage, defaultURL) {
     }
 
     componentDidUpdate(prevProps, prevState) {
-      //const { page, maxPage } = this.props;
     const { dataCurrentPage } = prevState;
-    const newdataCurrentPage = this.getInfoByPage(this.state.page, this.state.data);
+    const newdataCurrentPage = this.getInfoByPage(this.state.page, this.state.data).reverse();
 
     if (!this.compareArrays(dataCurrentPage, newdataCurrentPage)) {
       this.setState({

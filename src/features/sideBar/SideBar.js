@@ -99,7 +99,6 @@ class SideBar extends React.Component {
   };
 
   switchSideBar = () => {
-    console.log("switch sidebar");
     this.setState({
       isHiddenSideBar: !this.state.isHiddenSideBar
     })

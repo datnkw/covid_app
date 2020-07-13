@@ -60,12 +60,8 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
-    //this.setPage = this.setPage.bind(this);
-    //const currentPage = props.location.search ? queryString.parse(props.location.search).page : 1;
-    console.log("props.location: ", props.location);
     this.state = {
       loading: true,
-      //page: currentPage
     };
   }
 
@@ -76,9 +72,7 @@ class Dashboard extends React.Component {
         this.summaryGlobalInfo = response.data.Global;
         this.summaryCountries = response.data.Countries;
 
-        //this.maxPage = this.props.getPages(response.data.Countries.length);
-        console.log("data countries: ", response.data.Countries);
-        this.props.setData(response.data.Countries);
+        this.props.setData(response.data.Countries.reverse());
 
         localStorage.setItem(
           "summaryGlobalInfo",
@@ -88,7 +82,6 @@ class Dashboard extends React.Component {
           "summaryCountries",
           JSON.stringify(this.summaryCountries)
         );
-        //localStorage.setItem('maxPage', this.maxPage);
       });
     } else {
       this.summaryGlobalInfo = JSON.parse(
@@ -97,7 +90,6 @@ class Dashboard extends React.Component {
       this.summaryCountries = JSON.parse(
         localStorage.getItem("summaryCountries")
       );
-      //this.maxPage = localStorage.getItem('maxPage');
     }
 
     this.setState({ loading: false });
@@ -117,8 +109,6 @@ class Dashboard extends React.Component {
     if (this.state.loading) {
       return <Loading />;
     }
-    console.log("this page: ", this.state.page);
-    console.log("this info page: ", this.props.dataCurrentPage);
     return (
       <div className="full-width">
         <SideBar itemSideBarChoosen="World" />

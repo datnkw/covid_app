@@ -15,7 +15,6 @@ const firebaseConfig = {
 
 let count = 1;
 
-console.log("count firebase init: ", count++);
 firebase.initializeApp(firebaseConfig);
 
 export default firebase;
