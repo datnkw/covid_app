@@ -77,7 +77,10 @@ class Profile extends React.Component {
 
   async componentDidMount() {
     if (!this.context.authentication.isLogin) {
-      this.props.history.push("/login");
+      this.props.history.push({
+        pathname: '/login',
+        state: { from: this.props.location.pathname }
+      });
       return;
     }
 

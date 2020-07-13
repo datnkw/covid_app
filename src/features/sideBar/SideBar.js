@@ -95,7 +95,10 @@ class SideBar extends React.Component {
   }
   
   goToLogin = () => {
-    this.props.history.push("/login");
+    this.props.history.push({
+      pathname: '/login',
+      state: { from: this.props.location.pathname }
+    });
   };
 
   switchSideBar = () => {
