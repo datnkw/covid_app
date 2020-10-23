@@ -1,4 +1,4 @@
-.splashWrapper{
+.splashWrapper {
   position: absolute;
 
   width: 100vw;
@@ -18,7 +18,7 @@
 }
 
 .logo {
-  background-image: url("../../images/covid.png");
+  background-image: url("https://i.imgur.com/GaheCcb.jpg");
   background-size: cover;
 
   width: 200px;
@@ -32,9 +32,9 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(10px)
+    transform: translateY(10px);
   }
   100% {
-    transform: translateY(0px)
+    transform: translateY(0px);
   }
 }
